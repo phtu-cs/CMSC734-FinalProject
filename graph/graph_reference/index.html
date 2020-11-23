@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Dota 2 Hero Pair Popularity Graph</title>
+  <meta name="description" content="some of my research, thoughts, and projects.
+">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://larryfenn.com/personal/dota2drafts/popularitygraph.html">
+  <link rel="alternate" type="application/rss+xml" title="fenn, larry" href="http://larryfenn.com/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">fenn, larry</a>
+
+    <nav class="site-nav">
+
+      <div class="trigger">
+        <a class="page-link" href="/about">About</a>
+        <a class="page-link" href="/personal/">Personal</a>
+        <a class="page-link" href="/research/">Research</a>
+        <a class="page-link" href="/classes/">Classes</a>
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Dota 2 Hero Pair Popularity Graph</h1>
+  </header>
+
+  <div class="post-content">
+    <h3>Click & drag to reposition nodes. Double-click to release.</h3>
+  <div class="ui-widget">
+    <input id="search">
+    <button type="button" onclick="searchNode()">Search</button>
+  </div>
+  <div id="chart" align="center"></div>
+<html>
+  <body>
+  <style>    
+    .node {
+      stroke: #fff;
+      stroke-width: 1.5px;
+    }
+	.node text {
+      font: 14px helvetica;
+    }
+    .link {
+      stroke-width: 6;
+    }
+
+    d3-tip {
+      line-height: 1;
+      color: black;
+    }
+  </style>
+  <body>
+	<form>
+      <h3> 500 <input type="range" id="thresholdSlider" name="points" min="500" value="11000" step="10" max="13000" onchange="threshold(this.value)"> 13,000 picks</h3>
+    </form>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src ="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.4/d3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+  <script>
+    var width = 800,
+    height = 600;
+
+    var color = d3.scale.category20();
+
+	function edgecolor(d) {
+	  var threshlevel = document.getElementById('thresholdSlider').value;
+      return Math.atan((d.weight)/100)*2/3.14159;
+	}
+	
+    var force = d3.layout.force()
+    .charge(-300)
+    .linkDistance(10)
+	.linkStrength(.1)
+	.gravity(.15)
+    .size([width, height]);
+
+    // Append the SVG to the body
+    var svg = d3.select("#chart").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+	var dragflag = 0;
+	var node_drag = d3.behavior.drag()
+        .on("dragstart", dragstart)
+        .on("drag", dragmove)
+        .on("dragend", dragend);
+    function dragstart(d, i) {
+	  d3.event.sourceEvent.stopPropagation();
+	  force.start();
+	  d.fixed = true;
+	  dragflag = 1;
+    }
+    function dragmove(d, i) {
+        d.px += d3.event.dx;
+        d.py += d3.event.dy;
+        d.x += d3.event.dx;
+        d.y += d3.event.dy;
+    }
+    function dragend(d, i) {
+	  dragflag = 0;
+    }
+    function releasenode(d) {
+        d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
+        //force.resume();
+    }
+
+    var graph;
+    $.ajax({
+    url: "http://larryfenn.com/personal/dota2drafts/popularitygraph.json",
+    async: false,
+    success: function(json) {
+    graph = json;
+    }});
+
+    graphRec=JSON.parse(JSON.stringify(graph));
+
+    //Creates the graph data structure out of the json data
+    force.nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+    //Set up tooltip
+    var edgetip = d3.tip()
+    .attr('class', 'd3-tip')
+	.style("color", "red")
+	.style("font-weight", "bold")
+	.offset(function(d) {
+	  return [Math.abs(d.source.y - d.target.y)/2,0]
+	})
+    .html(function (d) {
+	  if (dragflag == 0) {
+        return Math.round(d.weight) + " picks";
+    }})
+    svg.call(edgetip);	
+	
+    //Create all the line svgs but without locations yet
+    var link = svg.selectAll(".link")
+    .data(graph.links)
+    .enter().append("line")
+    .attr("class", "link")
+    .style("opacity", "1")
+	.on('mouseover', edgetip.show)
+	.on('mouseout', edgetip.hide);
+
+	var node = svg.selectAll(".node")
+    .data(graph.nodes)
+    .enter().append("g")
+    .attr("class", "node")
+	.call(node_drag)
+	.on('dblclick', releasenode)
+	.on('mouseover', function(o) { toggle = 0})
+	.on('mouseenter', connectedNodes)
+	.on('mouseleave', connectedNodes);
+
+    node.append("circle")
+    .attr("r", 8)
+    .style("fill", function (d) {
+      return color(d.group);
+    });
+
+    node.append("text")
+      .attr("dx", 12)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.id })
+    .style("stroke", "black");
+    
+
+    //Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+    force.on("tick", function () {
+      link.attr("x1", function (d) {
+        return d.source.x;
+      })
+      .attr("y1", function (d) {
+        return d.source.y;
+      })
+        .attr("x2", function (d) {
+      return d.target.x;
+      })
+        .attr("y2", function (d) {
+      return d.target.y;
+      });
+      d3.selectAll("circle").attr("cx", function (d) {
+        return d.x;
+      })
+      .attr("cy", function (d) {
+        return d.y;
+      });
+      d3.selectAll("text").attr("x", function (d) {
+        return d.x;
+      })
+        .attr("y", function (d) {
+      return d.y;
+      });
+	
+      node.each(collide(0.5));
+	});
+
+
+    //adjust threshold
+    function threshold(thresh) {
+      graph.links.splice(5, graph.links.length);
+	  for (var i = 0; i < graphRec.nodes.length; i++) {
+	  	  graph.nodes[i].weight = 0;
+	  }
+      for (var i = 0; i < graphRec.links.length; i++) {
+        if (graphRec.links[i].weight > thresh) {
+	      graph.links.push(graphRec.links[i]);
+		  if (graph.nodes[graphRec.links[i].source.index] != undefined) {
+			 graph.nodes[graphRec.links[i].source.index].weight++;
+			 graph.nodes[graphRec.links[i].target.index].weight++;
+		  }
+	    }
+      }
+
+      //Create an array logging what is connected to what
+      linkedByIndex = {};
+      for (i = 0; i < graphRec.nodes.length; i++) {
+        linkedByIndex[i + "," + i] = 1;
+      };
+      graph.links.forEach(function (d) {
+        linkedByIndex[d.source.index + "," + d.target.index] = 1;
+      });
+      restart();
+    }
+    //Restart the visualisation after any node and link changes
+    function restart() {
+      link = link.data(graph.links);
+      link.exit().remove();
+      link.enter().insert("line", ".node").attr("class", "link").on('mouseover', edgetip.show).on('mouseout', edgetip.hide);
+	  var linkindex = 0;
+	  link[0].forEach(function(d) {
+	  	d.setAttribute("style", "stroke: rgb(10," + Math.round(10+ (255-10)*graph.links[linkindex].weight/12000) + ",10);stroke-opacity: " + (.1+.9*graph.links[linkindex].weight/12000));
+		linkindex++;
+	  })
+
+	  node = svg.selectAll(".node")
+	  for (i = 0; i < node[0].length; i++) {
+	  	  node[0][i].getElementsByTagName("circle")[0].setAttribute("r", 4 + 2*Math.sqrt(graph.nodes[i].weight));
+	  }
+
+      force.start();
+    }
+	threshold(500);
+	threshold(13000);
+	threshold(11000);
+	restart();
+	
+    var padding = 10, // separation between circles
+    radius=8;
+    function collide(alpha) {
+      var quadtree = d3.geom.quadtree(graph.nodes);
+      return function(d) {
+        var rb = 2*radius + padding,
+        nx1 = d.x - rb,
+        nx2 = d.x + rb,
+        ny1 = d.y - rb,
+        ny2 = d.y + rb;
+        quadtree.visit(function(quad, x1, y1, x2, y2) {
+          if (quad.point && (quad.point !== d)) {
+            var x = d.x - quad.point.x,
+            y = d.y - quad.point.y,
+            l = Math.sqrt(x * x + y * y);
+            if (l < rb) {
+              l = (l - rb) / l * alpha;
+              d.x -= x *= l;
+              d.y -= y *= l;
+              quad.point.x += x;
+              quad.point.y += y;
+            }
+          }
+          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+        });
+      };
+    }
+
+    //Toggle stores whether the highlighting is on
+    var toggle = 0;
+    var linkedByIndex;
+    //This function looks up whether a pair are neighbours
+    function neighboring(a, b) {
+      return linkedByIndex[a.index + "," + b.index];
+    }
+    function connectedNodes() {
+      if (toggle == 0) {
+        //Reduce the opacity of all but the neighbouring nodes
+        d = d3.select(this).node().__data__;
+	    node.style("opacity", function (o) {
+          return neighboring(d, o) | neighboring(o, d) ? 1 : .1;
+        });
+        link.style("stroke-opacity", function (o) {
+            return d.index==o.source.index | d.index==o.target.index ? (.1+.9*o.weight/13000) : 0.1;
+        });
+        toggle = 1;
+      } else if (dragflag == 0) {
+        //Put them back to opacity=1
+		node.style("opacity", 1);
+		link.style("opacity", 1);
+		curalpha = force.alpha();
+		restart();
+        toggle = 0;
+		force.alpha(curalpha);
+      }
+    }
+
+    var optArray = [];
+    for (var i = 0; i < graph.nodes.length - 1; i++) {
+      optArray.push(graph.nodes[i].id);
+    }
+    optArray = optArray.sort();
+    $(function () {
+      $("#search").autocomplete({
+        source: optArray
+      });
+    });
+    function searchNode() {
+      //find the node
+      var selectedVal = document.getElementById('search').value;
+      var node = svg.selectAll(".node");
+      if (selectedVal == "none") {
+        node.style("stroke", "white").style("stroke-width", "1");
+      } else {
+        var selected = node.filter(function (d, i) {
+            return d.id != selectedVal;
+        });
+        selected.style("opacity", "0");
+        var link = svg.selectAll(".link")
+        link.style("opacity", "0");
+        d3.selectAll(".node, .link").transition()
+            .duration(5000)
+            .style("opacity", 1);
+      }
+    }
+  </script>
+  </body>
+</html>
+
+<br>
+See also: <a href="/personal/dota2drafts/winrategraph.html">Hero pair winrate graph</a>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:larry@larryfenn.com"><img src="http://larryfenn.com/mailicon.png" width="16" height="16"> larry@larryfenn.com</a></li>
+		  <li><a href="https://github.com/larryfenn"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">larryfenn</span></a>
+</li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>some of my research, thoughts, and projects.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

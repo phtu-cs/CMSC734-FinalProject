@@ -1,0 +1,14 @@
+{
+  "name": "@d3/diverging-stacked-bar-chart",
+  "main": "5bd387ddcf4c080f@343.js",
+  "version": "343.0.0",
+  "homepage": "https://observablehq.com/@d3/diverging-stacked-bar-chart",
+  "author": {
+    "name": "D3",
+    "url": "https://observablehq.com/@d3"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
