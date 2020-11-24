@@ -11,40 +11,50 @@ var simulation = d3.forceSimulation()
                     .force('charge', d3.forceManyBody().strength(-850))
                     .force('center', d3.forceCenter(width / 2, height / 2));
 
-// var nodedrag = d3.drag()
-//              .on('start',dragstarted)
-//              .on('drag',dragged)
-//              .on('end',dragended)
+//var popularitySliderElement = document.getElementById('slider-popularity');
+var gpopularity = d3.select('div#slider-popularity')
+                    .append('svg')
+                    .attr('width',375)
+                    .attr('height',300)
+                    .append('g')
+                    //.attr('transform','translate(0,1100)')
+
+var popularitySlider = d3.sliderHorizontal()
+                         .min(0).max(255)
+                         .step(1)
+                         .width(300)
+                         .fill('black')
+                         .displayValue(false)
+                         .ticks(0)
 
 
+gpopularity.append('g').attr('transform','translate(30,60)')
+           .call(popularitySlider);
 
     function dragstart(d) {
-      // d3.event.sourceEvent.stopPropagation();
-      // force.start();
-      // d.fixed = true;
-      // dragflag = 1;
-      d3.select(this).raise().classed("active", true);
+      d.fx = d.x;
+      d.fy = d.y;
     }
     function dragmove(d) {
- d3.select(this).select("circle")
-    .attr("x", d.x = d3.event.x)
-    .attr("y", d.y = d3.event.y);
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
 
 // d3.select(this).select("text")
 //     .attr("x", d.x = d3.event.x)
 //     .attr("y", d.y = d3.event.y);
     }
     function dragend(d) {
-  d3.select(this).classed("active", false);
+             d.fx = null;
+             d.fy = null;
     }
     function releasenode(d) {
         d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
         //force.resume();
     }
     var node_drag = d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended);
+        .on("start", dragstart)
+        .on("drag", dragmove)
+        .on("end", dragend);
 
 
 
@@ -70,12 +80,11 @@ d3.json('popularitygraph.json').then(function(dataset){
     var nodeG = svg.append('g')
                    .attr('class','node-group');
 
-    var nodes = svg.append("g")
-                .attr("class", "node")
-                .selectAll("g")
+    var nodes = nodeG.selectAll("g")
                 .data(network.nodes)
                 .enter().append("g")
                 .call(node_drag)
+                .attr("class","node")
                 .on('mouseenter', hiddenNodes)
                 .on('mouseleave', showNodes);
 
@@ -87,50 +96,19 @@ d3.json('popularitygraph.json').then(function(dataset){
     }
     function hiddenNodes(d,index) {
 
-        // if (toggle == 0) {
-        // d3.select(this).style("opacity",0);
-
-        // d = d3.select(this).index;
-
-        // console.log(d)
-
         linkEnter.style("stroke", function (o) {
             return index==o.source.index | index==o.target.index ? 'green' : 0.1;
         }).style('stroke-opacity',function (o) {
             return index==o.source.index | index==o.target.index ? 1 : 0;
         });
 
-            // toggle = 1;
-        // }
-
-        /*
-      if (toggle == 0) {
-        //Reduce the opacity of all but the neighbouring nodes
-        d = d3.select(this).node().__data__;
-        node.style("opacity", function (o) {
-          return neighboring(d, o) | neighboring(o, d) ? 1 : .1;
-        });
-        link.style("stroke-opacity", function (o) {
-            return d.index==o.source.index | d.index==o.target.index ? (.1+.9*o.weight/13000) : 0.1;
-        });
-        toggle = 1;
-      } else if (dragflag == 0) {
-        //Put them back to opacity=1
-        node.style("opacity", 1);
-        link.style("opacity", 1);
-        curalpha = force.alpha();
-        restart();
-        toggle = 0;
-        force.alpha(curalpha);
-      }
-      */
+    
     }
     function showNodes(d,index){
 
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
 
     }
-
 
 
 
@@ -193,42 +171,12 @@ d3.json('popularitygraph.json').then(function(dataset){
 })
 
 
-
-function dragstarted(d){
-    
-    //if(d.fixed==true) d.fixed = false;
-    //restart could be considered as reheated the simulation during interaction
-    //simulation.restart();
-    //if (!d3.event.active) simulation.alphaTarget(0.3).restart();   //drag event is taking precedence in position of the node
-    d.fx = d.x;
-    d.fy = d.y;
-
-}
-
-function dragged(d)
-{
-
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-
-}
-
-function dragended(d)
-{
-    //if (!d3.event.active) simulation.alphaTarget(0);
-    //simulation.stop();
-    //d.fixed = true;
-    d.fx = null;
-    d.fy = null;
-
-}
-
-    function searchNode() {
+ function searchNode() {
       //find the node
       var selectedVal = document.getElementById('search').value;
       var node = svg.selectAll(".node");
 
-        console.log(node.size())
+      console.log(node.size())
 
       if (selectedVal == "none") {
         node.style("stroke", "white").style("stroke-width", "1");
@@ -246,7 +194,7 @@ function dragended(d)
         //     .duration(5000)
         //     .style("opacity", 1);
       }
-    }
+}
 
 /*  later for the popularity
 // team_id is not very useful for us I think ->  id decides the sequence of hero choosing

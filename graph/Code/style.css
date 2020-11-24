@@ -3,13 +3,19 @@
   stroke-opacity: 0.1;
 }
 
-.node {
+.node .text{
   stroke: #aaa;
   stroke-width: 1;
 }
 
 /*no change currently */
 
+
+
+.node .circle {
+  stroke: #aaa;
+  stroke-width: 1;  
+}
 .node .circle:hover {
   stroke: #999;
   stroke-width: 2;  
