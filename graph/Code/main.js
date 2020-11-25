@@ -31,39 +31,11 @@ var popularitySlider = d3.sliderHorizontal()
 gpopularity.append('g').attr('transform','translate(30,60)')
            .call(popularitySlider);
 
-    function dragstart(d) {
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-    function dragmove(d) {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
-
-// d3.select(this).select("text")
-//     .attr("x", d.x = d3.event.x)
-//     .attr("y", d.y = d3.event.y);
-    }
-    function dragend(d) {
-             d.fx = null;
-             d.fy = null;
-    }
-    function releasenode(d) {
-        d.fixed = false; // of course set the node to fixed so the force doesn't include the node in its auto positioning stuff
-        //force.resume();
-    }
-    var node_drag = d3.drag()
-        .on("start", dragstart)
-        .on("drag", dragmove)
-        .on("end", dragend);
-
-
 
 d3.json('popularitygraph.json').then(function(dataset){
     
     network = dataset;
     
-
-
     // data processing
     var linkG = svg.append('g')
                    .attr('class','link-group')
@@ -83,10 +55,9 @@ d3.json('popularitygraph.json').then(function(dataset){
     var nodes = nodeG.selectAll("g")
                 .data(network.nodes)
                 .enter().append("g")
-                .call(node_drag)
                 .attr("class","node")
                 .on('mouseenter', hiddenNodes)
-                .on('mouseleave', showNodes);
+                .on('mouseleave', showNodes)
 
     var toggle = 0;
     var linkedByIndex;
@@ -96,10 +67,12 @@ d3.json('popularitygraph.json').then(function(dataset){
     }
     function hiddenNodes(d,index) {
 
-        linkEnter.style("stroke", function (o) {
-            return index==o.source.index | index==o.target.index ? 'green' : 0.1;
+        linkEnter.style("stroke", function (o) {           
+             //console.log('index: ',index);
+             //console.log('source index: ',o.source.index);
+            return index.index ==o.source.index | index.index==o.target.index ? 'green' : 0.1;
         }).style('stroke-opacity',function (o) {
-            return index==o.source.index | index==o.target.index ? 1 : 0;
+            return index.index==o.source.index | index.index==o.target.index ? 1 : 0;
         });
 
     
@@ -109,7 +82,6 @@ d3.json('popularitygraph.json').then(function(dataset){
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
 
     }
-
 
 
     var circles = nodes.append('circle')
