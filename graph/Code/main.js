@@ -4,12 +4,18 @@ var width = +svg.attr('width');
 var height = +svg.attr('height');
 
 var colorScale = d3.scaleOrdinal(d3.schemeTableau10);
-var linkScale = d3.scaleSqrt().range([1,5]);
+var linkScale = d3.scaleLinear()
+    .domain([10, 12000])
+    .range([1, 50]);
 
 var simulation = d3.forceSimulation()
                     .force('link', d3.forceLink())
                     .force('charge', d3.forceManyBody().strength(-850))
                     .force('center', d3.forceCenter(width / 2, height / 2));
+
+
+var linkEnter;
+
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
 var gpopularity = d3.select('div#slider-popularity')
@@ -20,18 +26,19 @@ var gpopularity = d3.select('div#slider-popularity')
                     //.attr('transform','translate(0,1100)')
 
 var popularitySlider = d3.sliderHorizontal()
-                         .min(0).max(255)
+                         .min(0).max(12000)
                          .step(1)
                          .width(300)
                          .fill('black')
                          .displayValue(false)
                          .ticks(0)
+                          .on('onchange', num => {
+					    		linkEnter.style('stroke-opacity',function(d){ return d.weight>num?0.1:0 ;});
+					      });
 
 
 gpopularity.append('g').attr('transform','translate(30,60)')
            .call(popularitySlider);
-
-var linkEnter;
 
 d3.json('popularitygraph.json').then(function(dataset){
     
@@ -48,7 +55,7 @@ d3.json('popularitygraph.json').then(function(dataset){
                          .enter()
                          .append('line')
                          .attr('class','link')
-                         .attr('stroke-width',1);
+                         .attr('stroke-width',function(d){ return linkScale(d.weight) } );
 
     var nodeG = svg.append('g')
                    .attr('class','node-group');
