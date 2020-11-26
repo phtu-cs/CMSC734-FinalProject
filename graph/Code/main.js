@@ -15,7 +15,7 @@ var simulation = d3.forceSimulation()
 
 
 var linkEnter;
-
+var selected;
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
 var gpopularity = d3.select('div#slider-popularity')
@@ -33,8 +33,16 @@ var popularitySlider = d3.sliderHorizontal()
                          .displayValue(false)
                          .ticks(0)
                           .on('onchange', num => {
-					    		linkEnter.style('stroke-opacity',function(d){ return d.weight>num?0.1:0 ;});
-					      });
+					    		linkEnter.style("stroke", function (o) {           
+                             var a = false;
+                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                            return a ? 'green' : 0.1;
+                        }).style('stroke-opacity',function (o) {
+                             var a = false;
+                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                             return a & o.weight>num?  1 : 0;
+                        });
+                    });
 
 
 gpopularity.append('g').attr('transform','translate(30,60)')
@@ -162,9 +170,10 @@ d3.json('popularitygraph.json').then(function(dataset){
         node.style("stroke", "#aaa").style("stroke-width", "1");
         node.style("opacity",1);
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
+        selected = []
       } else {
         // console.log(node);
-        var selected = node.filter(function (d) {
+        selected = node.filter(function (d) {
             return d.id == selectedVal;
         });
          var unselected = node.filter(function (d) {
