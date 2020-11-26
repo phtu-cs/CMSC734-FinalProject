@@ -31,6 +31,7 @@ var popularitySlider = d3.sliderHorizontal()
 gpopularity.append('g').attr('transform','translate(30,60)')
            .call(popularitySlider);
 
+var linkEnter;
 
 d3.json('popularitygraph.json').then(function(dataset){
     
@@ -42,7 +43,7 @@ d3.json('popularitygraph.json').then(function(dataset){
 
     //use weight for link stroke width if possible
 
-    var linkEnter = linkG.selectAll('.link')
+    linkEnter = linkG.selectAll('.link')
                          .data(network.links)
                          .enter()
                          .append('line')
@@ -62,9 +63,9 @@ d3.json('popularitygraph.json').then(function(dataset){
     var toggle = 0;
     var linkedByIndex;
     //This function looks up whether a pair are neighbours
-    function neighboring(a, b) {
-      return linkedByIndex[a.index + "," + b.index];
-    }
+    // function neighboring(a, b) {
+    //   return linkedByIndex[a.index + "," + b.index];
+    // }
     function hiddenNodes(d,index) {
 
         linkEnter.style("stroke", function (o) {           
@@ -150,16 +151,37 @@ d3.json('popularitygraph.json').then(function(dataset){
 
       console.log(node.size())
 
-      if (selectedVal == "none") {
-        node.style("stroke", "white").style("stroke-width", "1");
+      if (selectedVal == "") {
+        node.style("stroke", "#aaa").style("stroke-width", "1");
+        node.style("opacity",1);
+        linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
       } else {
         // console.log(node);
         var selected = node.filter(function (d) {
+            return d.id == selectedVal;
+        });
+         var unselected = node.filter(function (d) {
             return d.id != selectedVal;
         });
 
-        console.log("Doom"==selectedVal)
-        selected.style("opacity", 0);
+        // console.log(selected.index);
+        // console.log("Doom"==selectedVal)
+        // unselected.style("opacity", 0);
+
+
+        linkEnter.style("stroke", function (o) {           
+             //console.log('index: ',index);
+             //console.log('source index: ',o.source.index);
+             var a = false;
+             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+            return a ? 'green' : 0.1;
+        }).style('stroke-opacity',function (o) {
+             var a = false;
+             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+             return a ? 1 : 0;
+        });
+        
+
         // var link = svg.selectAll(".link")
         // link.style("opacity", "0");
         // d3.selectAll(".node, .link").transition()
