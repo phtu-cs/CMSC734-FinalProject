@@ -18,15 +18,15 @@ var linkEnter;
 var selected;
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
-var gpopularity = d3.select('div#slider-popularity')
-                    .append('svg')
-                    .attr('width',375)
+var gpopularity = d3.select('svg#slider-popularity')
+                    .attr('width',300)
                     .attr('height',300)
+                    .attr('transform','translate(1020,-1000)')
                     .append('g')
-                    //.attr('transform','translate(0,1100)')
+                   
 
 var popularitySlider = d3.sliderHorizontal()
-                         .min(0).max(12000)
+                         .min(0).max(5500)
                          .step(1)
                          .width(300)
                          .fill('black')
@@ -47,6 +47,18 @@ var popularitySlider = d3.sliderHorizontal()
 
 gpopularity.append('g').attr('transform','translate(30,60)')
            .call(popularitySlider);
+
+gpopularity.append('text')    //add title for the slider
+            .text("Popularity Slider")
+            .attr('font-size',30)
+            .attr('font-weight',10)
+            .attr('transform','translate(20,30)')
+
+
+//process the search bar
+var searchbar = d3.select('#searchgroup')
+                  .attr('transform','translate(20, 20)');
+console.log(searchbar)
 
 d3.json('popularitygraph.json').then(function(dataset){
     
@@ -160,11 +172,12 @@ d3.json('popularitygraph.json').then(function(dataset){
 
 
  function searchNode() {
+
       //find the node
       var selectedVal = document.getElementById('search').value;
       var node = svg.selectAll(".node");
 
-      console.log(node.size())
+      //console.log(node.size())
 
       if (selectedVal == "") {
         node.style("stroke", "#aaa").style("stroke-width", "1");

@@ -6,15 +6,16 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div id="main">
+    <div id="main" class = "box">
         <svg width="1000" height="1000" style="border: 1px solid #777;">
         </svg>
+        
     </div>
-    <div id="slider-popularity"> </div>
-    <div class="ui-widget">
+    <div class="box">
+    <svg id = "slider-popularity"></svg>
     <input id="search">
-    <button type="button" onclick="searchNode()">Search</button>
-  </div>
+    <button id = 'searchbutton', type="button" onclick="searchNode()">Search</button>
+    </div>
 </body>
 <script src="http://d3js.org/d3.v6.js"></script>
 <script src="https://d3js.org/d3-dsv.v1.min.js"></script>

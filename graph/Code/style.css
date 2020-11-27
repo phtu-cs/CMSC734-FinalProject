@@ -1,16 +1,10 @@
 .link {
   stroke: #aaa;
-  stroke-opacity: 0.1;
+  stroke-opacity: 0.05;
 }
 
-.node .text{
-  stroke: #aaa;
-  stroke-width: 1;
-}
 
 /*no change currently */
-
-
 
 .node .circle {
   stroke: #aaa;
@@ -29,4 +23,12 @@ body {
 
 #main {
     margin: 20px;
+}
+
+
+input#search, button#searchbutton{
+
+position: relative;
+top:  -1200px;
+left: 740px;
 }
