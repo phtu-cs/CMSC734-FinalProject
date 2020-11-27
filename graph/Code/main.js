@@ -19,7 +19,7 @@ var selected;
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
 var gpopularity = d3.select('svg#slider-popularity')
-                    .attr('width',300)
+                    .attr('width',400)
                     .attr('height',300)
                     .attr('transform','translate(1020,-1000)')
                     .append('g')
@@ -69,7 +69,6 @@ d3.json('popularitygraph.json').then(function(dataset){
                    .attr('class','link-group')
 
     //use weight for link stroke width if possible
-
     linkEnter = linkG.selectAll('.link')
                          .data(network.links)
                          .enter()

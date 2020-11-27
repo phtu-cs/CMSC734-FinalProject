@@ -13,110 +13,422 @@
       "id": "Naga Siren",
       "index": 2
     },
-    { "id": "Undying" },
-    { "id": "Dragon Knight" },
-    { "id": "Juggernaut" },
-    { "id": "Ursa" },
-    { "id": "Bane" },
-    { "id": "Pugna" },
-    { "id": "Tinker" },
-    { "id": "Ancient Apparition" },
-    { "id": "Omniknight" },
-    { "id": "Chaos Knight" },
-    { "id": "Outworld Devourer" },
-    { "id": "Abaddon" },
-    { "id": "Faceless Void" },
-    { "id": "Mirana" },
-    { "id": "Bristleback" },
-    { "id": "Elder Titan" },
-    { "id": "Lone Druid" },
-    { "id": "Pudge" },
-    { "id": "Templar Assassin" },
-    { "id": "Shadow Demon" },
-    { "id": "Anti-Mage" },
-    { "id": "Keeper of the Light" },
-    { "id": "Necrophos" },
-    { "id": "Lina" },
-    { "id": "Medusa" },
-    { "id": "Slardar" },
-    { "id": "Phantom Lancer" },
-    { "id": "Tiny" },
-    { "id": "Riki" },
-    { "id": "Invoker" },
-    { "id": "Sniper" },
-    { "id": "Meepo" },
-    { "id": "Leshrac" },
-    { "id": "Zeus" },
-    { "id": "Silencer" },
-    { "id": "Broodmother" },
-    { "id": "Enigma" },
-    { "id": "Doom" },
-    { "id": "Techies" },
-    { "id": "Alchemist" },
-    { "id": "Batrider" },
-    { "id": "Brewmaster" },
-    { "id": "Axe" },
-    { "id": "Skywrath Mage" },
-    { "id": "Lifestealer" },
-    { "id": "Gyrocopter" },
-    { "id": "Venomancer" },
-    { "id": "Morphling" },
-    { "id": "Death Prophet" },
-    { "id": "Lion" },
-    { "id": "Ogre Magi" },
-    { "id": "Dazzle" },
-    { "id": "Magnus" },
-    { "id": "Shadow Fiend" },
-    { "id": "Storm Spirit" },
-    { "id": "Nature's Prophet" },
-    { "id": "Warlock" },
-    { "id": "Spirit Breaker" },
-    { "id": "Crystal Maiden" },
-    { "id": "Sven" },
-    { "id": "Huskar" },
-    { "id": "Shadow Shaman" },
-    { "id": "Treant Protector" },
-    { "id": "Sand King" },
-    { "id": "Dark Seer" },
-    { "id": "Clinkz" },
-    { "id": "Clockwerk" },
-    { "id": "Witch Doctor" },
-    { "id": "Enchantress" },
-    { "id": "Earthshaker" },
-    { "id": "Puck" },
-    { "id": "Nyx Assassin" },
-    { "id": "Bounty Hunter" },
-    { "id": "Luna" },
-    { "id": "Centaur Warrunner" },
-    { "id": "Disruptor" },
-    { "id": "Timbersaw" },
-    { "id": "Queen of Pain" },
-    { "id": "Viper" },
-    { "id": "Tusk" },
-    { "id": "Lycan" },
-    { "id": "Winter Wyvern" },
-    { "id": "Phoenix" },
-    { "id": "Beastmaster" },
-    { "id": "Bloodseeker" },
-    { "id": "Jakiro" },
-    { "id": "Windranger" },
-    { "id": "Drow Ranger" },
-    { "id": "Vengeful Spirit" },
-    { "id": "Io" },
-    { "id": "Spectre" },
-    { "id": "Kunkka" },
-    { "id": "Slark" },
-    { "id": "Weaver" },
-    { "id": "Troll Warlord" },
-    { "id": "Lich" },
-    { "id": "Visage" },
-    { "id": "Ember Spirit" },
-    { "id": "Legion Commander" },
-    { "id": "Wraith King" },
-    { "id": "Tidehunter" },
-    { "id": "Phantom Assassin" },
-    { "id": "Chen" },
-    { "id": "Rubick" }
+    {
+      "id": "Undying",
+      "index": 3
+    },
+    {
+      "id": "Dragon Knight",
+      "index": 4
+    },
+    {
+      "id": "Juggernaut",
+      "index": 5
+    },
+    {
+      "id": "Ursa",
+      "index": 6
+    },
+    {
+      "id": "Bane",
+      "index": 7
+    },
+    {
+      "id": "Pugna",
+      "index": 8
+    },
+    {
+      "id": "Tinker",
+      "index": 9
+    },
+    {
+      "id": "Ancient Apparition",
+      "index": 10
+    },
+    {
+      "id": "Omniknight",
+      "index": 11
+    },
+    {
+      "id": "Chaos Knight",
+      "index": 12
+    },
+    {
+      "id": "Outworld Devourer",
+      "index": 13
+    },
+    {
+      "id": "Abaddon",
+      "index": 14
+    },
+    {
+      "id": "Faceless Void",
+      "index": 15
+    },
+    {
+      "id": "Mirana",
+      "index": 16
+    },
+    {
+      "id": "Bristleback",
+      "index": 17
+    },
+    {
+      "id": "Elder Titan",
+      "index": 18
+    },
+    {
+      "id": "Lone Druid",
+      "index": 19
+    },
+    {
+      "id": "Pudge",
+      "index": 20
+    },
+    {
+      "id": "Templar Assassin",
+      "index": 21
+    },
+    {
+      "id": "Shadow Demon",
+      "index": 22
+    },
+    {
+      "id": "Anti-Mage",
+      "index": 23
+    },
+    {
+      "id": "Keeper of the Light",
+      "index": 24
+    },
+    {
+      "id": "Necrophos",
+      "index": 25
+    },
+    {
+      "id": "Lina",
+      "index": 26
+    },
+    {
+      "id": "Medusa",
+      "index": 27
+    },
+    {
+      "id": "Slardar",
+      "index": 28
+    },
+    {
+      "id": "Phantom Lancer",
+      "index": 29
+    },
+    {
+      "id": "Tiny",
+      "index": 30
+    },
+    {
+      "id": "Riki",
+      "index": 31
+    },
+    {
+      "id": "Invoker",
+      "index": 32
+    },
+    {
+      "id": "Sniper",
+      "index": 33
+    },
+    {
+      "id": "Meepo",
+      "index": 34
+    },
+    {
+      "id": "Leshrac",
+      "index": 35
+    },
+    {
+      "id": "Zeus",
+      "index": 36
+    },
+    {
+      "id": "Silencer",
+      "index": 37
+    },
+    {
+      "id": "Broodmother",
+      "index": 38
+    },
+    {
+      "id": "Enigma",
+      "index": 39
+    },
+    {
+      "id": "Doom",
+      "index": 40
+    },
+    {
+      "id": "Techies",
+      "index": 41
+    },
+    {
+      "id": "Alchemist",
+      "index": 42
+    },
+    {
+      "id": "Batrider",
+      "index": 43
+    },
+    {
+      "id": "Brewmaster",
+      "index": 44
+    },
+    {
+      "id": "Axe",
+      "index": 45
+    },
+    {
+      "id": "Skywrath Mage",
+      "index": 46
+    },
+    {
+      "id": "Lifestealer",
+      "index": 47
+    },
+    {
+      "id": "Gyrocopter",
+      "index": 48
+    },
+    {
+      "id": "Venomancer",
+      "index": 49
+    },
+    {
+      "id": "Morphling",
+      "index": 50
+    },
+    {
+      "id": "Death Prophet",
+      "index": 51
+    },
+    {
+      "id": "Lion",
+      "index": 52
+    },
+    {
+      "id": "Ogre Magi",
+      "index": 53
+    },
+    {
+      "id": "Dazzle",
+      "index": 54
+    },
+    {
+      "id": "Magnus",
+      "index": 55
+    },
+    {
+      "id": "Shadow Fiend",
+      "index": 56
+    },
+    {
+      "id": "Storm Spirit",
+      "index": 57
+    },
+    {
+      "id": "Nature's Prophet",
+      "index": 58
+    },
+    {
+      "id": "Warlock",
+      "index": 59
+    },
+    {
+      "id": "Spirit Breaker",
+      "index": 60
+    },
+    {
+      "id": "Crystal Maiden",
+      "index": 61
+    },
+    {
+      "id": "Sven",
+      "index": 62
+    },
+    {
+      "id": "Huskar",
+      "index": 63
+    },
+    {
+      "id": "Shadow Shaman",
+      "index": 64
+    },
+    {
+      "id": "Treant Protector",
+      "index": 65
+    },
+    {
+      "id": "Sand King",
+      "index": 66
+    },
+    {
+      "id": "Dark Seer",
+      "index": 67
+    },
+    {
+      "id": "Clinkz",
+      "index": 68
+    },
+    {
+      "id": "Clockwerk",
+      "index": 69
+    },
+    {
+      "id": "Witch Doctor",
+      "index": 70
+    },
+    {
+      "id": "Enchantress",
+      "index": 71
+    },
+    {
+      "id": "Earthshaker",
+      "index": 72
+    },
+    {
+      "id": "Puck",
+      "index": 73
+    },
+    {
+      "id": "Nyx Assassin",
+      "index": 74
+    },
+    {
+      "id": "Bounty Hunter",
+      "index": 75
+    },
+    {
+      "id": "Luna",
+      "index": 76
+    },
+    {
+      "id": "Centaur Warrunner",
+      "index": 77
+    },
+    {
+      "id": "Disruptor",
+      "index": 78
+    },
+    {
+      "id": "Timbersaw",
+      "index": 79
+    },
+    {
+      "id": "Queen of Pain",
+      "index": 80
+    },
+    {
+      "id": "Viper",
+      "index": 81
+    },
+    {
+      "id": "Tusk",
+      "index": 82
+    },
+    {
+      "id": "Lycan",
+      "index": 83
+    },
+    {
+      "id": "Winter Wyvern",
+      "index": 84
+    },
+    {
+      "id": "Phoenix",
+      "index": 85
+    },
+    {
+      "id": "Beastmaster",
+      "index": 86
+    },
+    {
+      "id": "Bloodseeker",
+      "index": 87
+    },
+    {
+      "id": "Jakiro",
+      "index": 88
+    },
+    {
+      "id": "Windranger",
+      "index": 89
+    },
+    {
+      "id": "Drow Ranger",
+      "index": 90
+    },
+    {
+      "id": "Vengeful Spirit",
+      "index": 91
+    },
+    {
+      "id": "Io",
+      "index": 92
+    },
+    {
+      "id": "Spectre",
+      "index": 93
+    },
+    {
+      "id": "Kunkka",
+      "index": 94
+    },
+    {
+      "id": "Slark",
+      "index": 95
+    },
+    {
+      "id": "Weaver",
+      "index": 96
+    },
+    {
+      "id": "Troll Warlord",
+      "index": 97
+    },
+    {
+      "id": "Lich",
+      "index": 98
+    },
+    {
+      "id": "Visage",
+      "index": 99
+    },
+    {
+      "id": "Ember Spirit",
+      "index": 100
+    },
+    {
+      "id": "Legion Commander",
+      "index": 101
+    },
+    {
+      "id": "Wraith King",
+      "index": 102
+    },
+    {
+      "id": "Tidehunter",
+      "index": 103
+    },
+    {
+      "id": "Phantom Assassin",
+      "index": 104
+    },
+    {
+      "id": "Chen",
+      "index": 105
+    },
+    {
+      "id": "Rubick",
+      "index": 106
+    }
   ],
   "links": [
     {
