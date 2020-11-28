@@ -3,7 +3,6 @@
   stroke-opacity: 0.05;
 }
 
-
 /*no change currently */
 
 .node .circle {
@@ -26,9 +25,13 @@ body {
 }
 
 
+svg#graphsvg{ 
+  border: 0;
+}
+
 input#search, button#searchbutton{
 
 position: relative;
-top:  -1200px;
+top:  -1150px;
 left: 640px;
 }

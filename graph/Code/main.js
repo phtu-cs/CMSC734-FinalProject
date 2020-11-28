@@ -5,8 +5,8 @@ var height = +svg.attr('height');
 
 var colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 var linkScale = d3.scaleLinear()
-    .domain([10, 12000])
-    .range([1, 50]);
+    .domain([10, 8000])
+    .range([3,15]);
 
 var simulation = d3.forceSimulation()
                     .force('link', d3.forceLink())
@@ -14,8 +14,10 @@ var simulation = d3.forceSimulation()
                     .force('center', d3.forceCenter(width / 2, height / 2));
 
 
-var linkEnter;
-var selected;
+var linkEnter = [];
+var selected = [];
+var selectedVal = "";  //initialized as ""
+var slidernum = 10;  //following the number of slider change
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
 var gpopularity = d3.select('svg#slider-popularity')
@@ -26,21 +28,37 @@ var gpopularity = d3.select('svg#slider-popularity')
                    
 
 var popularitySlider = d3.sliderHorizontal()
-                         .min(0).max(5500)
+                         .min(10).max(8000)   //although max is more than 12000, 8000 is enough to perform as a maximum threshold
                          .step(1)
                          .width(300)
                          .fill('black')
-                         .displayValue(false)
-                         .ticks(0)
-                          .on('onchange', num => {
-					    		linkEnter.style("stroke", function (o) {           
+                         .displayValue(true)
+                         .ticks(10)
+                         .on('onchange', num => {
+                            slidernum = num;
+					    	linkEnter.style("stroke", function (o) {           
                              var a = false;
-                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                            return a ? 'green' : 0.1;
+                            if(selectedVal !="")
+                            {
+
+                            selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                            return a ? 'green' : '#aaa';
+                           }
+                            else
+                           {
+                               return  0.1;
+                           }
                         }).style('stroke-opacity',function (o) {
                              var a = false;
+                            if(selectedVal !="")
+                            {
                              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                             return a & o.weight>num?  1 : 0;
+                             return a & o.weight>num?  0.1 : 0;
+                            }
+                            else
+                            {
+                                return o.weight >num?0.1:0;
+                            }
                         });
                     });
 
@@ -58,11 +76,12 @@ gpopularity.append('text')    //add title for the slider
 //process the search bar
 var searchbar = d3.select('#searchgroup')
                   .attr('transform','translate(20, 20)');
-console.log(searchbar)
+//console.log(searchbar)
 
 d3.json('popularitygraph.json').then(function(dataset){
     
     network = dataset;
+
     
     // data processing
     var linkG = svg.append('g')
@@ -74,7 +93,7 @@ d3.json('popularitygraph.json').then(function(dataset){
                          .enter()
                          .append('line')
                          .attr('class','link')
-                         .attr('stroke-width',function(d){ return linkScale(d.weight) } );
+                         .attr('stroke-width',function(d){ return linkScale(d.weight) } );   // more wide, more weight
 
     var nodeG = svg.append('g')
                    .attr('class','node-group');
@@ -88,25 +107,24 @@ d3.json('popularitygraph.json').then(function(dataset){
 
     var toggle = 0;
     var linkedByIndex;
-    //This function looks up whether a pair are neighbours
-    // function neighboring(a, b) {
-    //   return linkedByIndex[a.index + "," + b.index];
-    // }
+
     function hiddenNodes(d,index) {
 
         linkEnter.style("stroke", function (o) {           
-             //console.log('index: ',index);
-             //console.log('source index: ',o.source.index);
-            return index.index ==o.source.index | index.index==o.target.index ? 'green' : 0.1;
+            return index.index ==o.source.index | index.index==o.target.index ? 'green' : '#aaa';
         }).style('stroke-opacity',function (o) {
-            return index.index==o.source.index | index.index==o.target.index ? 1 : 0;
+            return index.index==o.source.index | index.index==o.target.index ? (o.weight>slidernum?  0.1 : 0): 0;
         });
 
     
     }
+
     function showNodes(d,index){
 
-        linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
+        linkEnter.style("stroke", '#aaa').style('stroke-opacity',function(o)
+            {
+                return o.weight>slidernum?  0.1 : 0;
+            });
 
     }
 
@@ -159,6 +177,15 @@ d3.json('popularitygraph.json').then(function(dataset){
             //.attr('fy',function(d){return d.y});
 
      }
+
+     if(selectedVal==="")
+     {
+        
+        selected = nodes.filter(function(d)  //reaturn all
+        {
+            return d;
+        })
+     }
     //simulation.alphaTarget(0);
     //circles.call(drag);   //call the drag event on circle node objects
     //simulation.stop();
@@ -173,14 +200,14 @@ d3.json('popularitygraph.json').then(function(dataset){
  function searchNode() {
 
       //find the node
-      var selectedVal = document.getElementById('search').value;
+      selectedVal = document.getElementById('search').value;
       var node = svg.selectAll(".node");
 
       //console.log(node.size())
 
       if (selectedVal == "") {
-        node.style("stroke", "#aaa").style("stroke-width", "1");
-        node.style("opacity",1);
+        node.style("stroke", "#aaa").style("stroke-width", "0.1");
+        node.style("opacity",0.1);
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
         selected = []
       } else {
@@ -192,10 +219,6 @@ d3.json('popularitygraph.json').then(function(dataset){
             return d.id != selectedVal;
         });
 
-        // console.log(selected.index);
-        // console.log("Doom"==selectedVal)
-        // unselected.style("opacity", 0);
-
 
         linkEnter.style("stroke", function (o) {           
              //console.log('index: ',index);
@@ -206,7 +229,7 @@ d3.json('popularitygraph.json').then(function(dataset){
         }).style('stroke-opacity',function (o) {
              var a = false;
              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-             return a ? 1 : 0;
+             return a ? 0.1 : 0;
         });
         
 
