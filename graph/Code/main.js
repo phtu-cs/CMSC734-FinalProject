@@ -78,7 +78,7 @@ var searchbar = d3.select('#searchgroup')
                   .attr('transform','translate(20, 20)');
 //console.log(searchbar)
 
-d3.json('popularitygraph.json').then(function(dataset){
+d3.json('merged.json').then(function(dataset){
     
     network = dataset;
 
@@ -206,10 +206,10 @@ d3.json('popularitygraph.json').then(function(dataset){
       //console.log(node.size())
 
       if (selectedVal == "") {
-        node.style("stroke", "#aaa").style("stroke-width", "0.1");
-        node.style("opacity",0.1);
-        linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
-        selected = []
+        // node.style("stroke", "#aaa").style("stroke-width", "0.1");
+        // node.style("opacity",0.1);
+        // linkEnter.style("stroke", '#aaa').style('stroke-opacity',0.1);
+        // selected = []
       } else {
         // console.log(node);
         selected = node.filter(function (d) {
