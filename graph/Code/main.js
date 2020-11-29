@@ -18,7 +18,7 @@ var linkEnter = [];
 var nodes = [];
 var selected = [];
 var selectedVal = "";  //initialized as ""
-var slidernum = 10;  //following the number of slider change
+var slidernum = 0;  //following the number of slider change
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
 var gpopularity = d3.select('svg#slider-popularity')
@@ -38,7 +38,6 @@ function onCategoryChanged()
 
 var popularitySlider = d3.sliderHorizontal()
                          .min(10).max(8000)   //although max is more than 12000, 8000 is enough to perform as a maximum threshold
-                         .step(1)
                          .width(300)
                          .fill('black')
                          .displayValue(true)
@@ -125,12 +124,12 @@ var graphweight = "weight";
 if(filterKey =="winningrate") 
     {
         graphweight = "winweight";
-        popularitySlider.min(-0.2).max(0.2).ticks(10).step(0.02);
+        popularitySlider.min(-0.2).max(0.15).ticks(10).tickFormat(d3.format('.1%')).default(-0.02);
 
     }
 else
 {
-     popularitySlider.min(10).max(8000).ticks(10).step(1);  
+     popularitySlider.min(10).max(8000).ticks(10).tickFormat(d3.format(',.0f')).default(50);  
 }
 
 
@@ -139,7 +138,7 @@ nodes.on('mouseenter', hiddenNodes)
 
 
 //change the slider values acoording to the category change as well
-
+gpopularity.call(popularitySlider);    //update    
 popularitySlider.on('onchange', num => {
                             slidernum = num;
                             linkEnter.style("stroke", function (o) {           
@@ -168,7 +167,7 @@ popularitySlider.on('onchange', num => {
                         });
                         });
 
-gpopularity.call(popularitySlider);    //update        
+    
 
 function hiddenNodes(d,index) {
 
