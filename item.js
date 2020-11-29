@@ -11,13 +11,13 @@ var heroNames = [];
 
 
 //save data into arrays
-d3.csv("match.csv").then(function(data) {
+d3.csv("item-match.csv").then(function(data) {
     data.forEach(function(d) {
         matchStatus.push([d["match_id"], d["radiant_win"]]);
     });
 });
 
-d3.csv("players.csv").then(function(data) {
+d3.csv("item-players.csv").then(function(data) {
     var count = 0;
     data.forEach(function(d) {
         if (count < 5) {    //True or False means if this player is playing as Radiant
@@ -30,7 +30,7 @@ d3.csv("players.csv").then(function(data) {
     });
 });
 
-d3.csv("item_info.csv").then(function(data) {
+d3.csv("item-item_info.csv").then(function(data) {
     data.forEach(function(d) {
         itemIdName.push([d["item_id"], d["item_name"]]);
         if (d["core_item"] == "1") {
@@ -43,7 +43,7 @@ d3.csv("item_info.csv").then(function(data) {
     });
 });
 
-d3.csv("hero_names.csv").then(function(data) {
+d3.csv("item-hero_names.csv").then(function(data) {
     data.forEach(function(d) {
         heroNames.push([d["hero_id"], d["name"]]);
     })
