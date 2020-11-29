@@ -124,12 +124,12 @@ var graphweight = "weight";
 if(filterKey =="winningrate") 
     {
         graphweight = "winweight";
-        popularitySlider.min(-0.2).max(0.15).ticks(10).tickFormat(d3.format('.1%')).default(-0.02);
+        popularitySlider.min(-0.2).max(0.15).ticks(10).tickFormat(d3.format('.1%')).value(-0.2);
 
     }
 else
 {
-     popularitySlider.min(10).max(8000).ticks(10).tickFormat(d3.format(',.0f')).default(50);  
+     popularitySlider.min(10).max(8000).ticks(10).tickFormat(d3.format(',.0f')).value(50);  
 }
 
 
@@ -140,6 +140,7 @@ nodes.on('mouseenter', hiddenNodes)
 //change the slider values acoording to the category change as well
 gpopularity.call(popularitySlider);    //update    
 popularitySlider.on('onchange', num => {
+                             console.log(num);
                             slidernum = num;
                             linkEnter.style("stroke", function (o) {           
                              var a = false;
