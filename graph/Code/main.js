@@ -19,6 +19,7 @@ var nodes = [];
 var selected = [];
 var selectedVal = "";  //initialized as ""
 var slidernum = 0;  //following the number of slider change
+var category = []
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
 var gpopularity = d3.select('svg#slider-popularity')
@@ -31,7 +32,7 @@ var gpopularity = d3.select('svg#slider-popularity')
 function onCategoryChanged()
 {
     var select = d3.select("#categorySelect").node();
-    var category = select.options[select.selectedIndex].value;
+    category = select.options[select.selectedIndex].value;
     //update the chart with the selected category of graph
     updateChart(category);
 }
@@ -50,7 +51,12 @@ var popularitySlider = d3.sliderHorizontal()
                             {
 
                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                            if(category=="winningrate"){
                             return a ? 'green' : '#aaa';
+                        }
+                        else{
+                            return a ? 'red' : '#aaa';
+                        }
                            }
                             else
                            {
@@ -148,7 +154,12 @@ popularitySlider.on('onchange', num => {
                             {
 
                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                            if(category=="winningrate"){
                             return a ? 'green' : '#aaa';
+                        }
+                        else{
+                            return a ? 'red' : '#aaa';
+                        }
                            }
                             else
                            {
@@ -173,7 +184,12 @@ popularitySlider.on('onchange', num => {
 function hiddenNodes(d,index) {
 
         linkEnter.style("stroke", function (o) {           
-            return index.index ==o.source.index | index.index==o.target.index ? 'green' : '#aaa';
+            if(category=="winningrate"){
+                return index.index ==o.source.index | index.index==o.target.index ? 'green' : '#aaa';
+            }
+            else{
+                return index.index ==o.source.index | index.index==o.target.index ? 'red' : '#aaa';
+            }
         }).style('stroke-opacity',function (o) {
             return index.index==o.source.index | index.index==o.target.index ? (o[graphweight]>slidernum?  0.1 : 0): 0;
         });
@@ -278,7 +294,12 @@ function showNodes(d,index){
              //console.log('source index: ',o.source.index);
              var a = false;
              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+            if(category=="winningrate"){
             return a ? 'green' : 0.1;
+        }
+        else{
+            return a ? 'red' : 0.1;
+        }
         }).style('stroke-opacity',function (o) {
              var a = false;
              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
