@@ -172,6 +172,7 @@ function updateChart(dataForShow, itemCategory) {
             .attr("class", "label")
             .attr("id", "labelOfItemFigure")
             .attr("transform", "translate(410,30)")
+            .attr("color", "white")
             .text("Win Rate (%)");
     } else {    //Purchase frequency
         maxVal = 150000;
@@ -190,6 +191,7 @@ function updateChart(dataForShow, itemCategory) {
             .attr("class", "label")
             .attr("id", "labelOfItemFigure")
             .attr("transform", "translate(300,30)")
+            .attr("color", "white")
             .text("Pruchase Frequency (Every 50,000 Games)");
     }
 

@@ -91,26 +91,32 @@ body {
   display: block;
 }
 
-#itemPage {
-    margin: 20px;
+#itemPage{
+
 }
 
-.axis {
+#itemPage .axis {
     text-anchor: middle;
+    color: white;
     font-size: 12px;
     font-weight: bold;
 }
 
-.label {
-    font-size: 16px;
+#itemPage .label {
+    font-size: 20px;
     font-weight: bold;
 }
 
-.rect {
+#itemPage .bar text {
+}
+
+#itemPage .rect {
     background: linear-gradient(90deg, #FDBB2D 0%, #3A1C71 100%);
     fill: grey;
 }
 
-.select_class {
+#itemPage .select_class {
+    color: white;
+    transform: translate(100px,0px);
 
 }
