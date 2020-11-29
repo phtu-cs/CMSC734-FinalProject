@@ -124,12 +124,12 @@ var graphweight = "weight";
 if(filterKey =="winningrate") 
     {
         graphweight = "winweight";
-        popularitySlider.min(-0.2).max(0.15).ticks(10).tickFormat(d3.format('.1%')).value(-0.2);
+        popularitySlider.min(-0.2).max(0.15).ticks(10).tickFormat(d3.format('.1%')).value(-0.2).displayFormat(d3.format('.1%'));
 
     }
 else
 {
-     popularitySlider.min(10).max(8000).ticks(10).tickFormat(d3.format(',.0f')).value(50);  
+     popularitySlider.min(10).max(8000).ticks(10).tickFormat(d3.format(',.0f')).value(50).displayFormat(d3.format('.0f'));  
 }
 
 
