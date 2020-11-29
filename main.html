@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FinalProject-YiLiu</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="fixed-side-navbar">
+    <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="#mainPage"><span>Main Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#heroPage"><span>Hero Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#itemPage"><span>Item Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#networkPage"><span>Network Page</span></a></li>
+    </ul>
+    </div>
+
+    <style>
+    body {
+      background-image: url('/dota-2.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+
+    <div class="parallax-content baner-content" id="mainPage">
+        <div class="container">
+            <div class="first-content">
+                <h1>Dota2 Pro Strategy</h1>
+                <span><em>Authors:  </em> Duotun Wang, Yi Liu, Yixuan Ren, Peihan Tu</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="heroPage">
+        <svg width="300" height="600" style="border: 1px solid #777;">
+        </svg>
+        <div>
+            <label for="heroCategorySelect">Show: </label>
+            <select class="custom-select" id="heroCategorySelect" onchange="onHeroCategoryChanged()">
+              <option selected value="all-letters">All Letters</option>
+              <option value="only-consonants">Only Consonants</option>
+              <option value="only-vowels">Only Vowels</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="itemPage">
+        <svg id="items" width="800" height="600" style="border: 1px solid #777;">
+        </svg>
+        <div class="select_class">
+            <label for="statSelect">Statistics: </label>
+            <select class="custom-select" id="statSelect" onchange="onCategoryChanged()">
+              <option selected value="top20Winrate">Win-Rate</option>
+              <option value="top20Frequency">Purchase-Frequency</option>
+            </select>
+        </div>
+        <div class="select_class">
+            <label for="categorySelect">Items: </label>
+            <select class="custom-select" id="categorySelect" onchange="onCategoryChanged()">
+              <option selected value="allItems">All Items</option>
+              <option value="coreItems">Core-Items</option>
+              <option value="supportItems">Support-Items</option>
+            </select>
+        </div>
+        <svg id="itemHero" width="800" height="600" style="border: 1px solid #777;">
+        </svg>
+        <div class="select_class">
+            <label for="itemHeroSelect">Item: </label>
+            <select class="custom-select" id="itemHeroSelect" onchange="onItemHeroChanged()">
+                <option selected value="NoSelection">No selection</option>
+            </select>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="./item.js"></script>
+<script src="./hero.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+<script>
+        $(document).ready(function(){
+          // Add smooth scrolling to all links
+          $(".fixed-side-navbar a, .primary-button a").on('click', function(event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+              // Prevent default anchor click behavior
+              event.preventDefault();
+
+              // Store hash
+              var hash = this.hash;
+
+              // Using jQuery's animate() method to add smooth page scroll
+              // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+              $('html, body').animate({
+                scrollTop: $(hash).offset().top
+              }, 800, function(){
+
+                // Add hash (#) to URL when done scrolling (default click behavior)
+                window.location.hash = hash;
+              });
+            } // End if
+          });
+        });
+    </script>
+
+</html>
