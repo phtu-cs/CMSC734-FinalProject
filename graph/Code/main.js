@@ -15,6 +15,7 @@ var simulation = d3.forceSimulation()
 
 
 var linkEnter = [];
+var nodes = [];
 var selected = [];
 var selectedVal = "";  //initialized as ""
 var slidernum = 10;  //following the number of slider change
@@ -24,8 +25,16 @@ var gpopularity = d3.select('svg#slider-popularity')
                     .attr('width',400)
                     .attr('height',300)
                     .attr('transform','translate(1020,-1000)')
-                    .append('g')
+  //                  .append('g')
                    
+
+function onCategoryChanged()
+{
+    var select = d3.select("#categorySelect").node();
+    var category = select.options[select.selectedIndex].value;
+    //update the chart with the selected category of graph
+    updateChart(category);
+}
 
 var popularitySlider = d3.sliderHorizontal()
                          .min(10).max(8000)   //although max is more than 12000, 8000 is enough to perform as a maximum threshold
@@ -66,11 +75,11 @@ var popularitySlider = d3.sliderHorizontal()
 gpopularity.append('g').attr('transform','translate(30,60)')
            .call(popularitySlider);
 
-gpopularity.append('text')    //add title for the slider
-            .text("Popularity Slider")
-            .attr('font-size',30)
-            .attr('font-weight',10)
-            .attr('transform','translate(20,30)')
+//gpopularity.append('text')    //add title for the slider
+//            .text("Popularity Slider")
+//            .attr('font-size',30)
+//            .attr('font-weight',10)
+//            .attr('transform','translate(20,30)')
 
 
 //process the search bar
@@ -81,8 +90,6 @@ var searchbar = d3.select('#searchgroup')
 d3.json('merged.json').then(function(dataset){
     
     network = dataset;
-
-    
     // data processing
     var linkG = svg.append('g')
                    .attr('class','link-group')
@@ -98,32 +105,86 @@ d3.json('merged.json').then(function(dataset){
     var nodeG = svg.append('g')
                    .attr('class','node-group');
 
-    var nodes = nodeG.selectAll("g")
+    nodes = nodeG.selectAll("g")
                 .data(network.nodes)
                 .enter().append("g")
                 .attr("class","node")
-                .on('mouseenter', hiddenNodes)
-                .on('mouseleave', showNodes)
 
-    var toggle = 0;
-    var linkedByIndex;
+    updateChart("popularity");
+})
+.catch(function(error){
+    //console.log(error.id)
+    throw error;
+})
 
-    function hiddenNodes(d,index) {
+
+function updateChart(filterKey)
+{
+
+var graphweight = "weight";
+if(filterKey =="winningrate") 
+    {
+        graphweight = "winweight";
+        popularitySlider.min(-0.2).max(0.2).ticks(10).step(0.02);
+
+    }
+else
+{
+     popularitySlider.min(10).max(8000).ticks(10).step(1);  
+}
+
+
+nodes.on('mouseenter', hiddenNodes)
+     .on('mouseleave', showNodes);
+
+
+//change the slider values acoording to the category change as well
+
+popularitySlider.on('onchange', num => {
+                            slidernum = num;
+                            linkEnter.style("stroke", function (o) {           
+                             var a = false;
+                            if(selectedVal !="")
+                            {
+
+                            selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                            return a ? 'green' : '#aaa';
+                           }
+                            else
+                           {
+                               return  0.1;
+                           }
+                        }).style('stroke-opacity',function (o) {
+                             var a = false;
+                            if(selectedVal !="")
+                            {
+                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
+                             return a & o[graphweight]>num?  0.1 : 0;
+                            }
+                            else
+                            {
+                                return o[graphweight] >num?0.1:0;
+                            }
+                        });
+                        });
+
+gpopularity.call(popularitySlider);    //update        
+
+function hiddenNodes(d,index) {
 
         linkEnter.style("stroke", function (o) {           
             return index.index ==o.source.index | index.index==o.target.index ? 'green' : '#aaa';
         }).style('stroke-opacity',function (o) {
-            return index.index==o.source.index | index.index==o.target.index ? (o.weight>slidernum?  0.1 : 0): 0;
+            return index.index==o.source.index | index.index==o.target.index ? (o[graphweight]>slidernum?  0.1 : 0): 0;
         });
-
     
-    }
+}
 
-    function showNodes(d,index){
+function showNodes(d,index){
 
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',function(o)
             {
-                return o.weight>slidernum?  0.1 : 0;
+                return o[graphweight]>slidernum?  0.1 : 0;
             });
 
     }
@@ -149,9 +210,9 @@ d3.json('merged.json').then(function(dataset){
     // link to the force simulation 
     var cnt= 0;
     simulation
-        .nodes(dataset.nodes)
+        .nodes(network.nodes)
         .force('link',
-          d3.forceLink(dataset.links).id(function(d)
+          d3.forceLink(network.links).id(function(d)
           {
             return d.index;
           })
@@ -186,16 +247,8 @@ d3.json('merged.json').then(function(dataset){
             return d;
         })
      }
-    //simulation.alphaTarget(0);
-    //circles.call(drag);   //call the drag event on circle node objects
-    //simulation.stop();
 
-})
-.catch(function(error){
-    //console.log(error.id)
-    throw error;
-})
-
+}
 
  function searchNode() {
 
@@ -232,12 +285,6 @@ d3.json('merged.json').then(function(dataset){
              return a ? 0.1 : 0;
         });
         
-
-        // var link = svg.selectAll(".link")
-        // link.style("opacity", "0");
-        // d3.selectAll(".node, .link").transition()
-        //     .duration(5000)
-        //     .style("opacity", 1);
       }
 }
 

@@ -33,5 +33,13 @@ input#search, button#searchbutton{
 
 position: relative;
 top:  -1150px;
-left: 640px;
+left: 1040px;
+}
+
+label#categoryLabel, select#categorySelect{
+
+position: relative;
+top:  -1300px;
+left: 630px;
+
 }

@@ -13,6 +13,13 @@
     </div>
     <div class="box">
     <svg id = "slider-popularity"></svg>
+    <label for="categorySelect" id ='categoryLabel'>Graph Information: </label>
+    <select class="custom-select" id="categorySelect"  onchange="onCategoryChanged()">
+        <option selected value="popularity">Popularity</option>
+        <option value="winningrate">Winning Rate</option>
+    </select>
+    </div>
+    <div class="box">
     <input id="search">
     <button id = 'searchbutton', type="button" onclick="searchNode()">Search</button>
     </div>
