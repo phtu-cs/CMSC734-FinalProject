@@ -1,4 +1,4 @@
-var matchStatus = [];       //record matchStatus
+var item_matchStatus = [];       //record matchStatus
 var matchItems = [];        //record match and items (finally) bought in the match
 var itemIdName = [];        //record item index and its name
 var itemWinrate = [];       //id, name, total bought times, win times, win rate
@@ -7,13 +7,13 @@ var top20Frequency = [];
 var allItems = [];
 var coreItems = [];
 var supportItems = [];
-var heroNames = [];
+var item_heroNames = [];
 
 
 //save data into arrays
 d3.csv("item-match.csv").then(function(data) {
     data.forEach(function(d) {
-        matchStatus.push([d["match_id"], d["radiant_win"]]);
+        item_matchStatus.push([d["match_id"], d["radiant_win"]]);
     });
 });
 
@@ -45,7 +45,7 @@ d3.csv("item-item_info.csv").then(function(data) {
 
 d3.csv("item-hero_names.csv").then(function(data) {
     data.forEach(function(d) {
-        heroNames.push([d["hero_id"], d["name"]]);
+        item_heroNames.push([d["hero_id"], d["name"]]);
     })
 })
 
@@ -62,7 +62,7 @@ function countingWinRate() {
         var match_id = matchItems[i][0];
         for (var j=3;j<=7;j++) {
             var item_id = matchItems[i][j];
-            var itemWin = matchStatus[parseInt(match_id)][1] == matchItems[i][1];
+            var itemWin = item_matchStatus[parseInt(match_id)][1] == matchItems[i][1];
             for (var k=0;k<itemWinrate.length;k++) {
                 if (itemWinrate[k][0] == item_id) {
                     if (itemWin) {
@@ -123,22 +123,22 @@ setTimeout(() => {
 }, 1000);
 //Ploting the graph
 
-var svg = d3.select("#items");
+var item_svg = d3.select("#items");
 
-var svgWidth = +svg.attr('width');
-var svgHeight = +svg.attr('height');
+var item_svgWidth = +item_svg.attr('width');
+var item_svgHeight = +item_svg.attr('height');
 
-var padding = {t: 60, r: 40, b:30, l:50};
+var item_padding = {t: 60, r: 40, b:30, l:50};
 
-var chartWidth = svgWidth - padding.l - padding.r - 200;
-var chartHeight = svgHeight - padding.t - padding.b;
+var item_chartWidth = item_svgWidth - item_padding.l - item_padding.r - 200;
+var item_chartHeight = item_svgHeight - item_padding.t - item_padding.b;
 
-var barBand = chartHeight / 20;
-var barHeight = barBand * 0.7;
+var item_barBand = item_chartHeight / 20;
+var item_barHeight = item_barBand * 0.7;
 
-var chartG = svg.append('g')
-                .attr('transform', 'translate('+[100, padding.t]+')');
-chartG.selectAll('.bar').data();
+var item_chartG = item_svg.append('g')
+                .attr('transform', 'translate('+[100, item_padding.t]+')');
+item_chartG.selectAll('.bar').data();
 
 function updateChart(dataForShow, itemCategory) {
     var removeAxis = document.getElementById("axisOfItemFigure");
@@ -159,16 +159,16 @@ function updateChart(dataForShow, itemCategory) {
     if (maxVal < 1) {
         var xScale = d3.scaleLinear()
                             .domain([0, 1])
-                            .range([0,chartWidth]);
+                            .range([0,item_chartWidth]);
         var axis = d3.axisTop(xScale)
                   .ticks(5)
                   .tickFormat(d => (100 * d | 0) + "%");
-        var tempAxis = svg.append("g")
+        var tempAxis = item_svg.append("g")
             .attr("class", "axis")
             .attr("id", "axisOfItemFigure")
             .attr("transform", "translate(170,55)")
             .call(axis);
-        var text = svg.append("text")
+        var text = item_svg.append("text")
             .attr("class", "label")
             .attr("id", "labelOfItemFigure")
             .attr("transform", "translate(410,30)")
@@ -178,16 +178,16 @@ function updateChart(dataForShow, itemCategory) {
         maxVal = 150000;
         var xScale = d3.scaleLinear()
                             .domain([0, maxVal])
-                            .range([0,chartWidth]);
+                            .range([0,item_chartWidth]);
         var axis = d3.axisTop(xScale)
                   .ticks(5)
                   .tickFormat(d => d);
-        var tempAxis = svg.append("g")
+        var tempAxis = item_svg.append("g")
             .attr("class", "axis")
             .attr("id", "axisOfItemFigure")
             .attr("transform", "translate(170,55)")
             .call(axis);
-        var text = svg.append("text")
+        var text = item_svg.append("text")
             .attr("class", "label")
             .attr("id", "labelOfItemFigure")
             .attr("transform", "translate(300,30)")
@@ -196,7 +196,7 @@ function updateChart(dataForShow, itemCategory) {
     }
 
 
-    var g = svg.append('g');
+    var g = item_svg.append('g');
 
     var tempData = [];
     var counter = 0;
@@ -211,7 +211,7 @@ function updateChart(dataForShow, itemCategory) {
         }
     }
 
-    var bars = chartG.selectAll('.bar')
+    var bars = item_chartG.selectAll('.bar')
        .data(tempData, function(d){
            return d[1] + d[2].toString();   //I have to give the name of this element an uniqe name
        });
@@ -222,13 +222,13 @@ function updateChart(dataForShow, itemCategory) {
 
     bars.merge(barsEnter)
         .attr('transform', function(d,i){
-           return 'translate('+[10, i * barBand + 4]+')';
+           return 'translate('+[10, i * item_barBand + 4]+')';
        });
 
     var rect = barsEnter.append('rect')
                         .attr('class', 'rect')
                         .attr('transform', 'translate(60,0)')
-                        .attr('height', barHeight)
+                        .attr('height', item_barHeight)
                         .attr('width', function(d){
                             return xScale(d[2]);
                         });
@@ -360,34 +360,34 @@ function updateItemHeroChart(itemSelection) {
                     .attr("cy", 300)
                     .attr("r", 20);
     var itemName;
-    var heroNamesForText;
+    var item_heroNamesForText;
     if (itemSelection == null) {
         itemName = "No selection";
-        heroNamesForText = ["No selection", "No selection", "No selection", "No selection", "No selection"];
+        item_heroNamesForText = ["No selection", "No selection", "No selection", "No selection", "No selection"];
     } else {
         itemName = itemSelection;
         var itemId;
-        heroNamesForText = [];
+        item_heroNamesForText = [];
         for (var i=0;i<itemIdName.length;i++) {
             if (itemIdName[i][1] == itemSelection) {
                 itemId = itemIdName[i][0];
                 for (var j=0;j<itemWithHeros.length;j++) {
                     if (itemWithHeros[j][0] == itemId) {
-                        heroNamesForText.push(itemWithHeros[i][1]);
-                        heroNamesForText.push(itemWithHeros[i][2]);
-                        heroNamesForText.push(itemWithHeros[i][3]);
-                        heroNamesForText.push(itemWithHeros[i][4]);
-                        heroNamesForText.push(itemWithHeros[i][5]);
+                        item_heroNamesForText.push(itemWithHeros[i][1]);
+                        item_heroNamesForText.push(itemWithHeros[i][2]);
+                        item_heroNamesForText.push(itemWithHeros[i][3]);
+                        item_heroNamesForText.push(itemWithHeros[i][4]);
+                        item_heroNamesForText.push(itemWithHeros[i][5]);
                     }
                 }
 
             }
         }
 
-        for (var i=0;i<heroNamesForText.length;i++) {
-            for (var j=0; j<heroNames.length;j++) {
-                if (heroNames[j][0] == heroNamesForText[i]) {
-                    heroNamesForText[i] = heroNames[j][1];
+        for (var i=0;i<item_heroNamesForText.length;i++) {
+            for (var j=0; j<item_heroNames.length;j++) {
+                if (item_heroNames[j][0] == item_heroNamesForText[i]) {
+                    item_heroNamesForText[i] = item_heroNames[j][1];
                 }
             }
         }
@@ -434,35 +434,35 @@ function updateItemHeroChart(itemSelection) {
 
     var heroText1 = d3.select("#itemHero")
                         .append("text")
-                        .text(heroNamesForText[0])
+                        .text(item_heroNamesForText[0])
                         .attr("id", "heroText0")
                         .attr("x", 600)
                         .attr("y", 80)
                         .attr("text-anchor", "middle");
     var heroText2 = d3.select("#itemHero")
                         .append("text")
-                        .text(heroNamesForText[1])
+                        .text(item_heroNamesForText[1])
                         .attr("id", "heroText1")
                         .attr("x", 600)
                         .attr("y", 180)
                         .attr("text-anchor", "middle");
     var heroText3 = d3.select("#itemHero")
                         .append("text")
-                        .text(heroNamesForText[2])
+                        .text(item_heroNamesForText[2])
                         .attr("id", "heroText2")
                         .attr("x", 600)
                         .attr("y", 280)
                         .attr("text-anchor", "middle");
     var heroText4 = d3.select("#itemHero")
                         .append("text")
-                        .text(heroNamesForText[3])
+                        .text(item_heroNamesForText[3])
                         .attr("id", "heroText3")
                         .attr("x", 600)
                         .attr("y", 380)
                         .attr("text-anchor", "middle");
     var heroText5 = d3.select("#itemHero")
                         .append("text")
-                        .text(heroNamesForText[4])
+                        .text(item_heroNamesForText[4])
                         .attr("id", "heroText4")
                         .attr("x", 600)
                         .attr("y", 480)
