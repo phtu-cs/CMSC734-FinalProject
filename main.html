@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FinalProject-YiLiu</title>
+    <title>CMSC734-FinalProject</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -18,7 +18,7 @@
 
     <style>
     body {
-      background-image: url('/background-2.jpg');
+      background-image: url('/background-1.jpg');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%;
@@ -28,27 +28,23 @@
     <div class="parallax-content baner-content" id="mainPage">
         <div class="container">
             <div class="first-content">
-                <h1>Dota2 Pro Strategy</h1>
-                <span><em>Authors:  </em> Duotun Wang, Yi Liu, Yixuan Ren, Peihan Tu</span>
+                <h1 style="text-align:center">Dota2 Pro Strategy</h1>
+                <text style="text-align:center">Authors: Duotun Wang, Yi Liu, Yixuan Ren, Peihan Tu</text>
             </div>
         </div>
     </div>
 
     <div id="heroPage">
-        <svg width="300" height="600" style="border: 1px solid #777;">
+        <svg width="800" height="600" style="border: 1px solid #777;">
         </svg>
-        <div>
-            <label for="heroCategorySelect">Show: </label>
-            <select class="custom-select" id="heroCategorySelect" onchange="onHeroCategoryChanged()">
-              <option selected value="all-letters">All Letters</option>
-              <option value="only-consonants">Only Consonants</option>
-              <option value="only-vowels">Only Vowels</option>
-            </select>
-        </div>
+
     </div>
 
     <div id="itemPage">
-        <svg id="items" width="800" height="600" style="border: 1px solid #777;">
+        <h2 class="itemFigure1" style="text-align:center">Item Selections</h2>
+        <text class="itemFigure1" style="text-align:center"> This figure shows the pruchase frequency for all items in the Dota2 game as well
+            as the winrate of the item purchased</text>
+        <svg id="items" width="800" height="600">
         </svg>
         <div class="select_class">
             <label for="statSelect">Statistics: </label>
@@ -65,7 +61,10 @@
               <option value="supportItems">Support-Items</option>
             </select>
         </div>
-        <svg id="itemHero" width="800" height="600" style="border: 1px solid #777;">
+        <h2 id="itemFigure2" style="text-align:center">Items vs. Heroes</h2>
+        <text class="itemFigure2" style="text-align:center"> This figure shows item with its highest purchase
+            frequency Heroes</text>
+        <svg id="itemHero" width="800" height="600">
         </svg>
         <div class="select_class">
             <label for="itemHeroSelect">Item: </label>
@@ -76,16 +75,9 @@
     </div>
 
     <div id="NetworkPage">
-        <svg width="300" height="600" style="border: 1px solid #777;">
+        <svg width="800" height="600" style="border: 1px solid #777;">
         </svg>
-        <div>
-            <label for="heroCategorySelect">Show: </label>
-            <select class="custom-select" id="heroCategorySelect" onchange="onHeroCategoryChanged()">
-              <option selected value="all-letters">All Letters</option>
-              <option value="only-consonants">Only Consonants</option>
-              <option value="only-vowels">Only Vowels</option>
-            </select>
-        </div>
+
     </div>
 
 </body>
@@ -93,8 +85,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="./item.js"></script>
-<script src="./hero.js"></script>
+<script src="./item/item.js"></script>
+
+
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>

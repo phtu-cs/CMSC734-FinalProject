@@ -90,14 +90,28 @@ body {
   color: black;
   display: block;
 }
+#mainPage text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
 
-#itemPage{
-
+#itemPage text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+#itemPage #items{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
 #itemPage .axis {
     text-anchor: middle;
-    color: white;
     font-size: 12px;
     font-weight: bold;
 }
@@ -107,16 +121,32 @@ body {
     font-weight: bold;
 }
 
-#itemPage .bar text {
-}
-
 #itemPage .rect {
     background: linear-gradient(90deg, #FDBB2D 0%, #3A1C71 100%);
-    fill: grey;
+    fill: #d12519;
+    opacity: 1;
 }
 
 #itemPage .select_class {
-    color: white;
     transform: translate(100px,0px);
+}
+#itemPage #statSelect {
+}
+#itemPage #categorySelect {
+}
+
+#itemPage #itemHero{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+#itemPage #itemHero text{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+#itemPage #itemHeroSelect text{
 
 }
