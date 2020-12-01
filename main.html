@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CMSC734-FinalProject</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="fixed-side-navbar">
+    <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" href="#mainPage"><span>Main Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#heroPage"><span>Hero Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#itemPage"><span>Item Page</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#NetworkPage"><span>Network Page</span></a></li>
+    </ul>
+    </div>
+
+    <style>
+    body {
+      background-image: url('/background-1.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+    </style>
+
+    <div class="parallax-content baner-content" id="mainPage">
+        <div class="container">
+            <div class="first-content">
+                <h1 style="text-align:center">Dota2 Pro Strategy
+                <img src="dota2.png" align="center" width="64" height="64">
+                </h1>
+                <text style="text-align:center; font-size: large;">Authors: Duotun Wang, Yi Liu, Yixuan Ren, Peihan Tu</text>
+            </div>
+        </div>
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+               <tr style="padding:0px">
+                 <td style="padding:2.5%;width:63%;vertical-align:middle">
+                   <!-- <p style="text-align:center"> -->
+                   <!-- </p> -->
+               <h2 class="itemFigure1" style="text-align:left: ">Project Overview</h2>
+                   <p style = "font-size: large">
+     In this project, we will research the problem of how the big data of the multiplayer video game (Dota2) affect the strategies made by teams and players. Further to this, we aim at producing a detailed interactive analysis to help users pick heroes, items, and win team fights.
+     <br><br>
+     Multiplayer video games are becoming more and more popular nowadays, and the competition awards and the number of competitions each year are both fast-growing. The professional teams will be happy to have the insights of this data since they could provide their team and players better strategies for the games. For example, in Dota2, we could analyze the price-performance ratio of different equipment given rivals’ equipment and game levels. Besides, casual players may also refer to our data to have a better understanding of the game and improve their skills for the game.
+     <br><br>
+     Since it is becoming increasingly critical to choose the right strategies for players to win the game, the team leaders or data analyzers would ask questions such as which heroes to pick to achieve the highest win rate and what lane strategies should the players apply to increase their win rate. Outside the game, the team builders may also ask which player is better and should sign for their team during the player transfer window. Different regions in the world may have different preferences of strategies in the game, therefore, it will also be interesting for people to learn from players from other regions and find out the best strategies for them to win their games.
+     </p>
+                 </td>
+               </tr>
+               <tr style="padding:0px">
+                 <td style="padding:2.5%;width:63%;vertical-align:middle">
+                   <!-- <p style="text-align:center"> -->
+                   <!-- </p> -->
+                   <p style="text-align:center">
+         <img src="item.png" align="center" width="700" height="600">
+           <img src="heros.jpg" align="center" width="700" height="600">
+                   </p>
+                 </td>
+               </tr>
+             </tbody>
+           </table>
+    </div>
+
+
+    <div id="heroPage">
+        <svg id="hero" width="800" height="600">
+        </svg>
+    </div>
+
+
+    <div id="itemPage">
+        <h2 class="itemFigure1" style="text-align:center">Item Selections</h2>
+        <text class="itemFigure1" style="text-align:center"> This figure shows the pruchase frequency for all items in the Dota2 game as well
+            as the winrate of the item purchased</text>
+        <svg id="items" width="800" height="600">
+        </svg>
+        <div class="select_class">
+            <label for="statSelect">Statistics: </label>
+            <select class="custom-select" id="statSelect" onchange="onCategoryChanged()">
+              <option selected value="top20Winrate">Win-Rate</option>
+              <option value="top20Frequency">Purchase-Frequency</option>
+            </select>
+        </div>
+        <div class="select_class">
+            <label for="categorySelect">Items: </label>
+            <select class="custom-select" id="categorySelect" onchange="onCategoryChanged()">
+              <option selected value="allItems">All Items</option>
+              <option value="coreItems">Core-Items</option>
+              <option value="supportItems">Support-Items</option>
+            </select>
+        </div>
+        <h2 id="itemFigure2" style="text-align:center">Items vs. Heroes</h2>
+        <text class="itemFigure2" style="text-align:center"> This figure shows item with its highest purchase
+            frequency Heroes</text>
+        <svg id="itemHero" width="800" height="600">
+        </svg>
+        <div class="select_class">
+            <label for="itemHeroSelect">Item: </label>
+            <select class="custom-select" id="itemHeroSelect" onchange="onItemHeroChanged()">
+                <option selected value="NoSelection">No selection</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="NetworkPage">
+        <h2 class="networkFigure" style="text-align:center">Hero </h2>
+        <div id="main" class = "box">
+         <svg  id='graphsvg' width="1000" height="1000" >
+         </svg>
+       </div>
+      <div class="box">
+         <svg id = "slider-popularity"></svg>
+         <label for="SliderSelect" id ='SliderLabel'>Graph Information: </label>
+         <select class="custom-select" id="SliderSelect"  onchange="onSliderChanged()">
+           <option selected value="popularity">Popularity</option>
+           <option value="winningrate">Winning Rate</option>
+         </select>
+      </div>
+      <div class="box">
+        <input id="search">
+        <button id = 'searchbutton', type="button" onclick="searchNode()">Search</button>
+      </div>
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="http://d3js.org/d3.v6.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script src="./network/d3-simple-slider.js"></script>
+<script src="./network/d3-tip.js"></script>
+<script src="./main.js"></script>
+<script src="./item/item.js"></script>
+<script src= "./network/network.js"></script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+<script>
+        $(document).ready(function(){
+          // Add smooth scrolling to all links
+          $(".fixed-side-navbar a, .primary-button a").on('click', function(event) {
+
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
+              // Prevent default anchor click behavior
+              event.preventDefault();
+
+              // Store hash
+              var hash = this.hash;
+
+              // Using jQuery's animate() method to add smooth page scroll
+              // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+              $('html, body').animate({
+                scrollTop: $(hash).offset().top
+              }, 800, function(){
+
+                // Add hash (#) to URL when done scrolling (default click behavior)
+                window.location.hash = hash;
+              });
+            } // End if
+          });
+        });
+    </script>
+
+</html>
