@@ -190,14 +190,14 @@ body {
 #NetworkPage input#search,#NetworkPage button#searchbutton{
 
 position: relative;
-top:  -1150px;
+top:  -1050px;
 left: 1040px;
 }
 
 #NetworkPage label#categoryLabel,#NetworkPage select#categorySelect{
 
 position: relative;
-top:  -1300px;
+top:  -1200px;
 left: 630px;
 
 }
