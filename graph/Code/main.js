@@ -116,8 +116,7 @@ d3.json('merged.json').then(function(dataset){
                      .enter().append('line')
                       .attr('class','link');
 
-        
-
+      
 /*
     var path = linkG.selectAll('.link')
         .append("path")
@@ -138,7 +137,8 @@ d3.json('merged.json').then(function(dataset){
                          .text(function(d,i){
                           return "here";
                          })
- */                        
+ */      
+
     var nodeG = svg.append('g')
                    .attr('class','node-group');
 
