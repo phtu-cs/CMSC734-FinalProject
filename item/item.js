@@ -120,7 +120,7 @@ setTimeout(() => {
     updateChart(top20Winrate, allItems);
     updateItemHeroChart(null);
 
-}, 1000);
+}, 2000);
 //Ploting the graph
 
 var item_svg = d3.select("#items");
