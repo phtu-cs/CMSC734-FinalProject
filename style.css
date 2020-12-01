@@ -3,6 +3,9 @@ body {
     margin: 0;
 }
 
+a { color: black; }
+
+a:hover { color: black; }
 
 .fixed-side-navbar {
   position: fixed;
@@ -16,7 +19,7 @@ body {
   transition: all .3s;
 }
 .fixed-side-navbar:hover {
-  /*background: transparent;*/
+  background: transparent;
 }
 .fixed-side-navbar:hover .nav > li > a > span {
   color: rgba(0, 0, 0, 0.5);
@@ -29,7 +32,7 @@ body {
   border-radius: 15px;
 }
 .fixed-side-navbar .nav > li a.active {
-  /*background-color: transparent;*/
+  background-color: transparent;
   color: black;
 }
 .fixed-side-navbar .nav > li a.active:after {
@@ -44,8 +47,8 @@ body {
   margin-top: -8px;
   width: 16px;
   height: 16px;
-  /*background: transparent;*/
-  border: 2px solid #fff;
+  background: transparent;
+  border: 2px solid black;
   border-radius: 10px;
 }
 .nav>li {
@@ -55,7 +58,7 @@ body {
 .fixed-side-navbar .nav > li a {
   color: #fff;
   min-height: 32px;
-  /*background: transparent;*/
+  background: transparent;
   padding: 5px 45px 5px 25px;
   border-right: none;
 }
@@ -73,6 +76,7 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 10px;
+  border: 2px solid black;
   background: rgba(250, 250, 250, 0.75);
   -webkit-transition: all .3s;
   transition: all .3s;
@@ -80,7 +84,7 @@ body {
           transform: scale(0.6);
 }
 .fixed-side-navbar .nav > li a:hover {
-  /*background-color: transparent;*/
+  background-color: transparent;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-color: black;
@@ -90,6 +94,7 @@ body {
   color: black;
   display: block;
 }
+
 #mainPage text {
     display: block;
     margin-left: auto;
@@ -125,6 +130,7 @@ body {
     background: linear-gradient(90deg, #FDBB2D 0%, #3A1C71 100%);
     fill: #d12519;
     opacity: 1;
+
 }
 
 #itemPage .select_class {
@@ -148,56 +154,5 @@ body {
 
 
 #itemPage #itemHeroSelect text{
-
-}
-
-
-
-/*Network css*/
-
-#NetworkPage .link {
-  stroke: #aaa;
-  stroke-opacity: 0.05;
-}
-
-/*no change currently */
-
-#NetworkPage .node .circle {
-  stroke: #aaa;
-  stroke-width: 1;
-}
-#NetworkPage .node .circle:hover {
-  stroke: #999;
-  stroke-width: 2;
-}
-
-
-/*body {
-    font-family: "Open Sans";
-    margin: 0;
-}
-
-
-#main {
-    margin: 20px;
-}
-*/
-
-#NetworkPage svg#graphsvg{
-  border: 0;
-}
-
-#NetworkPage input#search,#NetworkPage button#searchbutton{
-
-position: relative;
-top:  -1050px;
-left: 1040px;
-}
-
-#NetworkPage label#SliderLabel,#NetworkPage select#SliderSelect{
-
-position: relative;
-top:  -1200px;
-left: 630px;
 
 }
