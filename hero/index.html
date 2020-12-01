@@ -2,22 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lab 5 - ABCs of D3</title>
+    <title>Lab 6 - Example</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div id="main">
-        <svg width="300" height="600" style="border: 1px solid #777;">
-        </svg>
-        <div>
-            <label for="categorySelect">Show: </label>
-            <select class="custom-select" id="categorySelect" onchange="onCategoryChanged()">
-              <option selected value="all-letters">All Letters</option>
-              <option value="only-consonants">Only Consonants</option>
-              <option value="only-vowels">Only Vowels</option>
-            </select>
-        </div>
+        <svg width="1800" height="800" style="border: 1px solid #777; background-color: #424949;">
+	<div style="position: absolute; top: 20px; left: 50px;">
+		<label for="rangeSelect">Sort by:</label>
+		<select class="custom-select small" id="categorySelect" onchange="onCategoryChanged()">
+			<option selected value="default">Default</option>
+			<option value="numwin">num_win</option>
+			<option value="winrate">winrate</option>
+			<option value="power (hp)">power (hp)</option>
+			<option value="weight (lb)">weight (lb)</option>
+			<option value="0-60 mph (s)">0-60 mph (s)</option>
+			<option value="year">year</option>
+		</select>
+	</div>
+    <div style="position: absolute; top: 20px; left: 250px;">
+		<label for="rangeSelect">Display Range:</label>
+		<select class="custom-select small" id="rangeSelect" onchange="onRangeChanged()">
+			<option selected value="all">All</option>
+			<option value="top20">Top 20</option>
+			<option value="top50">Top 50</option>
+			<option value="power (hp)">power (hp)</option>
+			<option value="weight (lb)">weight (lb)</option>
+			<option value="0-60 mph (s)">0-60 mph (s)</option>
+			<option value="year">year</option>
+		</select>
+	</div>
+		</svg>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
