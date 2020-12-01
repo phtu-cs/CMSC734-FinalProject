@@ -30,9 +30,9 @@ var gpopularity = d3.select('svg#slider-popularity')
   //                  .append('g')
                    
 
-function onCategoryChanged()
+function onSliderChanged()
 {
-    var select = d3.select("#categorySelect").node();
+    var select = d3.select("#SliderSelect").node();
     category = select.options[select.selectedIndex].value;
     //update the chart with the selected category of graph
     if(category =="winningrate")
@@ -43,7 +43,7 @@ function onCategoryChanged()
     {
         graphweight = "weight";
     }
-    updateChart(category);
+    NetWorkupdateChart(category);
 }
 
 var popularitySlider = d3.sliderHorizontal()

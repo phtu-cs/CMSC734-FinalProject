@@ -194,7 +194,7 @@ top:  -1050px;
 left: 1040px;
 }
 
-#NetworkPage label#categoryLabel,#NetworkPage select#categorySelect{
+#NetworkPage label#SliderLabel,#NetworkPage select#SliderSelect{
 
 position: relative;
 top:  -1200px;
