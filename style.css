@@ -16,7 +16,7 @@ body {
   transition: all .3s;
 }
 .fixed-side-navbar:hover {
-  background: transparent;
+  /*background: transparent;*/
 }
 .fixed-side-navbar:hover .nav > li > a > span {
   color: rgba(0, 0, 0, 0.5);
@@ -29,7 +29,7 @@ body {
   border-radius: 15px;
 }
 .fixed-side-navbar .nav > li a.active {
-  background-color: transparent;
+  /*background-color: transparent;*/
   color: black;
 }
 .fixed-side-navbar .nav > li a.active:after {
@@ -44,7 +44,7 @@ body {
   margin-top: -8px;
   width: 16px;
   height: 16px;
-  background: transparent;
+  /*background: transparent;*/
   border: 2px solid #fff;
   border-radius: 10px;
 }
@@ -55,7 +55,7 @@ body {
 .fixed-side-navbar .nav > li a {
   color: #fff;
   min-height: 32px;
-  background: transparent;
+  /*background: transparent;*/
   padding: 5px 45px 5px 25px;
   border-right: none;
 }
@@ -80,7 +80,7 @@ body {
           transform: scale(0.6);
 }
 .fixed-side-navbar .nav > li a:hover {
-  background-color: transparent;
+  /*background-color: transparent;*/
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-color: black;
@@ -164,11 +164,11 @@ body {
 
 #NetworkPage .node .circle {
   stroke: #aaa;
-  stroke-width: 1;  
+  stroke-width: 1;
 }
 #NetworkPage .node .circle:hover {
   stroke: #999;
-  stroke-width: 2;  
+  stroke-width: 2;
 }
 
 
@@ -183,7 +183,7 @@ body {
 }
 */
 
-#NetworkPage svg#graphsvg{ 
+#NetworkPage svg#graphsvg{
   border: 0;
 }
 
