@@ -26,7 +26,7 @@ var graphweight = "weight";   //default is for popularity
 var gpopularity = d3.select('svg#slider-popularity')
                     .attr('width',400)
                     .attr('height',300)
-                    .attr('transform','translate(1020,-1000)')
+                    .attr('transform','translate(1020,-900)')
   //                  .append('g')
                    
 
