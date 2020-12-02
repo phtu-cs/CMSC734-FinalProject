@@ -127,8 +127,7 @@ a:hover { color: black; }
 }
 
 #itemPage .rect {
-    background: linear-gradient(90deg, #FDBB2D 0%, #3A1C71 100%);
-    fill: #d12519;
+    fill: url('#MyGradient');
     opacity: 1;
 
 }
@@ -154,5 +153,77 @@ a:hover { color: black; }
 
 
 #itemPage #itemHeroSelect text{
+
+}
+
+#itemPage label#itemHeroLabel,#itemPage select#itemHeroSelect{
+
+  position: relative;
+  top:  -550px;
+  left: 950px;
+}
+
+
+#itemPage img#itemhero_imgone{
+  position: relative;
+  top:  -500px;
+  left: 950px;
+}
+
+#itemPage img#itemhero_imgtwo{
+  position: relative;
+  top:  -400px;
+  left: 1000px;
+}
+
+#itemPage img#itemhero_imgthree{
+  position: relative;
+  top:  -300px;
+  left: 450px;
+}
+
+
+#itemPage img#itemlist{
+  position: relative;
+  top:  -650px;
+  left: 1050px;
+}
+
+
+
+#NetworkPage .link {
+  stroke: #aaa;
+  stroke-opacity: 0.05;
+}
+
+/*no change currently */
+
+#NetworkPage .node .circle {
+  stroke: #aaa;
+  stroke-width: 1;  
+}
+#NetworkPage .node .circle:hover {
+  stroke: #999;
+  stroke-width: 2;  
+}
+
+
+
+#NetworkPage svg#graphsvg{ 
+  border: 0;
+}
+
+#NetworkPage input#search,#NetworkPage button#searchbutton{
+
+position: relative;
+top:  -1100px;
+left: 1040px;
+}
+
+#NetworkPage label#SliderLabel,#NetworkPage select#SliderSelect{
+
+position: relative;
+top:  -1200px;
+left: 630px;
 
 }

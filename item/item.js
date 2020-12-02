@@ -225,20 +225,24 @@ function updateChart(dataForShow, itemCategory) {
            return 'translate('+[10, i * item_barBand + 4]+')';
        });
 
+    // change bar looks like (rounded + layered color) 
     var rect = barsEnter.append('rect')
                         .attr('class', 'rect')
                         .attr('transform', 'translate(60,0)')
                         .attr('height', item_barHeight)
                         .attr('width', function(d){
                             return xScale(d[2]);
-                        });
+                        })
+                        .attr("rx",3)
+                        .attr("ry",5);
 
     barsEnter.append('text')
         .attr('x', -90)
         .attr('dy', '0.9em')
         .text(function(d){
             return d[1];
-       });
+       })
+        .style('fontFamily','Century Gothic');
 
     bars.exit().remove();
 }
