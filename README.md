@@ -1,6 +1,7 @@
 # CMSC734-FinalProject: Dota 2 Pro Strategy
 ## Duotun Wang, Yi Liu, Yixuan Ren, Peihan Tu
-### Webpage Setup Instruction (Direct Access: https://tph9608.github.io/CMSC734-FinalProject/)
+### Webpage Setup Instruction 
+- (Direct Access: https://tph9608.github.io/CMSC734-FinalProject/)
 
 To test our webpage in a local server, users could follow the similar setup steps as those achieved in lab excercises:
 1) open a terminal that could run python (e.g., anaconda)
