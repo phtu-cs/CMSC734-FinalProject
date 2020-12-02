@@ -227,3 +227,57 @@ top:  -1200px;
 left: 630px;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#heroPage .axis-label {
+    text-anchor: middle;
+    font-size: 12px;
+    font-weight: semibold;
+    color: white;
+}
+
+#heroPage {
+    margin: 20px;
+}
+
+
+#heroPage .barWin.hovered rect {
+	fill: blue;
+};
+
+#heroPage .barWin.hovered text {
+	font-weight: bold;
+	color: white;
+};
+
+#heroPage .barWin .value {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+#heroPage .barLose.hovered rect {
+	fill: red;
+};
+
+#heroPage .barLose.hovered text {
+	font-weight: bold;
+	color: white;
+};
+
+#heroPage .barLose .value {
+    font-size: 11px;
+    font-weight: bold;
+}
