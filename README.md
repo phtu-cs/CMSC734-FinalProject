@@ -9,4 +9,4 @@ To test our webpage in a local server, users could follow the similar setup step
 - recommend to test our webpage using chrome
 
 ### Brief Code Explanation
-There are 
+Besides "index.html" and related images for the webpage background, we organized our data visualization codes (e.g., dataset and javascript files) into corresponding folders (e.g., item, network, hero, etc.). There is single .css file named as "style.css" to describe our web design in a whole.
