@@ -19,7 +19,7 @@ var nodes = [];
 var selected = [];
 var selectedVal = "";  //initialized as ""
 var slidernum = 0;  //following the number of slider change
-var category = []
+var networkcategory = []
 var graphweight = "weight";   //default is for popularity
 
 //var popularitySliderElement = document.getElementById('slider-popularity');
@@ -33,9 +33,9 @@ var gpopularity = d3.select('svg#slider-popularity')
 function onSliderChanged()
 {
     var select = d3.select("#SliderSelect").node();
-    category = select.options[select.selectedIndex].value;
+    networkcategory = select.options[select.selectedIndex].value;
     //update the chart with the selected category of graph
-    if(category =="winningrate")
+    if(networkcategory =="winningrate")
     {
         graphweight = "winweight";
     }
@@ -43,7 +43,7 @@ function onSliderChanged()
     {
         graphweight = "weight";
     }
-    NetWorkupdateChart(category);
+    NetWorkupdateChart(networkcategory);
 }
 
 var popularitySlider = d3.sliderHorizontal()
@@ -62,7 +62,7 @@ var popularitySlider = d3.sliderHorizontal()
                             {
 
                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                            if(category=="winningrate"){
+                            if(networkcategory=="winningrate"){
                             return a ? 'green' : '#aaa';
                         }
                         else{
@@ -122,7 +122,7 @@ d3.json('network/network-data.json').then(function(dataset){
     nodes = nodeG.selectAll("g")
                 .data(network.nodes)
                 .enter().append("g")
-                .attr("class","node") 
+                .attr("class","networknode") 
 
     NetWorkupdateChart("popularity");
 })
@@ -165,7 +165,7 @@ popularitySlider.on('onchange', num => {
                             {
 
                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                            if(category=="winningrate"){
+                            if(networkcategory=="winningrate"){
                             return a ? 'green' : '#aaa';
                              }
                            else{
@@ -199,7 +199,7 @@ gpopularity.call(popularitySlider);    //update
 function hiddenNodes(d,index) {
 
         linkEnter.style("stroke", function (o) {           
-            if(category=="winningrate"){
+            if(networkcategory=="winningrate"){
                 return index.index ==o.source.index | index.index==o.target.index ? 'green' : '#aaa';
             }
             else{
@@ -281,14 +281,13 @@ function showNodes(d,index){
 
 }
 
- function searchNode() {
+ function searchNetworkNode() {
 
       //find the node
       selectedVal = document.getElementById('search').value;
-      var node = svg.selectAll(".node");
-
+      var node = graphsvg.selectAll(".networknode");
+      //console.log("Selected Val: ",selectedVal);
       //console.log(node.size())
-
       if (selectedVal == "") {
         //node.style("stroke", "#aaa").style("stroke-width", "0.1");
         //node.style("opacity",0.1);
@@ -306,16 +305,16 @@ function showNodes(d,index){
             return d.id != selectedVal;
         });
 
-
         linkEnter.style("stroke", function (o) {           
-             //console.log('index: ',index);
-             //console.log('source index: ',o.source.index);
+
              var a = false;
-             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-            if(category=="winningrate"){
+             selected.each(function(d) { 
+               if(d.index == o.source.index | d.index == o.target.index) {a= true;};  });
+            if(networkcategory=="winningrate"){
             return a ? 'green' : 0.1;
-        }
-        else{
+         }
+        else{ 
+             //if(a==true) console.log("here");
             return a ? 'red' : 0.1;
         }
         }).style('stroke-opacity',function (o) {
