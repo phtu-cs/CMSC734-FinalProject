@@ -64,7 +64,7 @@ var lettersMap = {
 };
 
 d3.csv('winlose_indi.csv', dataPreprocessor).then(function(dataset) {
-//		console.log(dataset)
+//      console.log(dataset)
         letters = dataset;
 
         // Set up the variables and functions that we need for our bar chart
@@ -76,11 +76,11 @@ d3.csv('winlose_indi.csv', dataPreprocessor).then(function(dataset) {
         });
         maxNum = d3.max([maxNumWin, maxNumLose]);
         var nameHeroes = letters.map(function(d) {
-			return d.hero_name;
-		});
-		var tickNameHeroes = letters.map(function(d,i) {
-			return (i + 1) * barBand;
-		});
+            return d.hero_name;
+        });
+        var tickNameHeroes = letters.map(function(d,i) {
+            return (i + 1) * barBand;
+        });
         
 
         yScaleWin = d3.scaleLinear()
@@ -93,19 +93,26 @@ d3.csv('winlose_indi.csv', dataPreprocessor).then(function(dataset) {
             .domain([52, 48])
             .range([-chartHeight, chartHeight]);
         var xScaleHero = d3.scaleOrdinal()
-			.domain(nameHeroes)
-			.range(tickNameHeroes);
+            .domain(nameHeroes)
+            .range(tickNameHeroes);
         
         
         colorScaleWin = d3.scaleSequential(d3.interpolateBlues)
-			.domain([maxNum, 0]);
-		colorScaleLose = d3.scaleSequential(d3.interpolateReds)
-			.domain([0, maxNum]);
+            .domain([maxNum, 0]);
+        colorScaleLose = d3.scaleSequential(d3.interpolateReds)
+            .domain([0, maxNum]);
 
         svg.append('text')
-            .attr('class', 'axis-label')
-            .attr('transform', 'translate('+[svgWidth / 2+20, 60]+')')
-            .text('Number of Win and Win Rate vs Hero')
+            .attr('class', 'axis-label-left')
+            .attr('transform', 'translate('+[svgWidth-50, 60]+')')
+            .text('Win Rate')
+            .style('fill','Gray')
+            .style('font-size','20px');
+
+        svg.append('text')
+            .attr('class', 'axis-label-right')
+            .attr('transform', 'translate('+[50, 60]+')')
+            .text('Number of Win')
             .style('fill','Gray')
             .style('font-size','20px');
 
@@ -124,14 +131,14 @@ d3.csv('winlose_indi.csv', dataPreprocessor).then(function(dataset) {
             .attr('transform', 'translate('+[svgWidth - padding.r - 50, padding.t + chartHeight]+')')
             .call(d3.axisRight(yScaleRate).ticks(12));
         svg.append('g') // enter
-			.attr('id', 'axisHero')
-			.attr('transform', 'translate('+[padding.l, svgHeight - padding.b + 20]+')')
-			.call(d3.axisBottom(xScaleHero))
-			.selectAll('text')
-				.style('text-anchor', 'end')
-				.attr('transform', 'rotate(-65)')
-				.attr('dx', '-1em')
-				.attr('dy', '.15em');
+            .attr('id', 'axisHero')
+            .attr('transform', 'translate('+[padding.l, svgHeight - padding.b + 20]+')')
+            .call(d3.axisBottom(xScaleHero))
+            .selectAll('text')
+                .style('text-anchor', 'end')
+                .attr('transform', 'rotate(-65)')
+                .attr('dx', '-1em')
+                .attr('dy', '.15em');
 
         
         filterKey = 'default';
@@ -152,59 +159,59 @@ function updateHeroChart() {
     var zoom = 1;
     
     if (range == 'all') {
-    	filteredLetters = letters;
-    	zoom = 1;
+        filteredLetters = letters;
+        zoom = 1;
     } else if(range == 'top20') {
-    	filteredLetters = filteredLetters.slice(0, 20);
-    	zoom = 110 / 20; // 114
+        filteredLetters = filteredLetters.slice(0, 20);
+        zoom = 110 / 20; // 114
     } else if(range == 'top50') {
-    	filteredLetters = filteredLetters.slice(0, 50);
-    	zoom = 110 / 50; // 114
+        filteredLetters = filteredLetters.slice(0, 50);
+        zoom = 110 / 50; // 114
     }
     
     if (filterKey == 'default') {
-    	filteredLetters.sort( function(a, b) {
-			return a.hero_id - b.hero_id;
-		});
-	} else if(filterKey == 'numwin') {
-    	filteredLetters.sort( function(a, b) {
-			return b.num_win - a.num_win;
-		});
+        filteredLetters.sort( function(a, b) {
+            return a.hero_id - b.hero_id;
+        });
+    } else if(filterKey == 'numwin') {
+        filteredLetters.sort( function(a, b) {
+            return b.num_win - a.num_win;
+        });
     } else if(filterKey == 'winrate') {
-    	filteredLetters.sort( function(a, b) {
-			return b.winrate - a.winrate;
-		});
-	}
+        filteredLetters.sort( function(a, b) {
+            return b.winrate - a.winrate;
+        });
+    }
     
     
     // brute force
     chartG.selectAll('.barWin')
-		.remove();
-	chartG.selectAll('.barLose')
-		.remove();
-	chartG.selectAll('.barRate')
-		.remove();
+        .remove();
+    chartG.selectAll('.barLose')
+        .remove();
+    chartG.selectAll('.barRate')
+        .remove();
     
     
     var nameHeroes = filteredLetters.map(function(d) {
-		return d.hero_name;
+        return d.hero_name;
     });
-	var tickNameHeroes = filteredLetters.map(function(d, i) {
-		return (i + 1) * barBand * zoom;
-	});
+    var tickNameHeroes = filteredLetters.map(function(d, i) {
+        return (i + 1) * barBand * zoom;
+    });
 
-	var xScaleHero = d3.scaleOrdinal()
-		.domain(nameHeroes)
-		.range(tickNameHeroes);
+    var xScaleHero = d3.scaleOrdinal()
+        .domain(nameHeroes)
+        .range(tickNameHeroes);
 
     svg.select('#axisHero')
-    	.transition()
-		.call(d3.axisBottom(xScaleHero))
-		.selectAll('text')
-				.style('text-anchor', 'end')
-				.attr('transform', 'rotate(-65)')
-				.attr('dx', '-1em')
-				.attr('dy', '.15em');
+        .transition()
+        .call(d3.axisBottom(xScaleHero))
+        .selectAll('text')
+                .style('text-anchor', 'end')
+                .attr('transform', 'rotate(-65)')
+                .attr('dx', '-1em')
+                .attr('dy', '.15em');
 
 
     // Create a d3-selection using the 'bar' classname
@@ -227,7 +234,7 @@ function updateHeroChart() {
     var barsEnterWin = barsWin.enter()
         .append('g')
         .attr('class', 'barWin')
-        .on('mouseover', function(d) {
+        .on('mouseover', function(d,index) {
             // Use this to select the hovered element
             var hovered = d3.select(this);
             // add hovered class to style the group
@@ -235,13 +242,13 @@ function updateHeroChart() {
             // add a new text value element to the group
             hovered.append('text')
                 .attr('class', 'value')
-				.style('text-anchor', 'start')
-				.style('font-size', '10px')
-				.style('fill','white')
-				.attr('transform', 'rotate(-65)')
+                .style('text-anchor', 'start')
+                .style('font-size', '15px')
+                .style('fill','white')
+                .attr('transform', 'rotate(-65)')
                 .attr('dx', '.5em')
                 .attr('dy', '.5em')
-                .text(d.num_win);
+                .text(index.num_win);
         })
         .on('mouseout', function(d) {
             // Clean up the actions that happened in mouseover
@@ -252,7 +259,7 @@ function updateHeroChart() {
     var barsEnterLose = barsLose.enter()
         .append('g')
         .attr('class', 'barLose')
-        .on('mouseover', function(d) {
+        .on('mouseover', function(d,index) {
             // Use this to select the hovered element
             var hovered = d3.select(this);
             // add hovered class to style the group
@@ -261,14 +268,14 @@ function updateHeroChart() {
             hovered.append('text')
                 .attr('class', 'value')
                 .style('text-anchor', 'end')
-				.style('font-size', '15px')
-				.style('fill','white')
-				.attr('transform', function(d) {
-            		return 'translate('+[0, yScaleLose(d.num_lose) + 8]+')rotate(-65)';
-            	})
+                .style('font-size', '15px')
+                .style('fill','white')
+                .attr('transform', function(d) {
+                    return 'translate('+[0, yScaleLose(d.num_lose) + 8]+')rotate(-65)';
+                })
                 .attr('dx', '.5em')
                 .attr('dy', '.5em')
-                .text(d.num_lose);
+                .text(index.num_lose);
         })
         .on('mouseout', function(d) {
             // Clean up the actions that happened in mouseover
@@ -279,8 +286,9 @@ function updateHeroChart() {
     var barsEnterRate = barsRate.enter()
         .append('g')
         .attr('class', 'barRate')
-        .on('mouseover', function(d) {
+        .on('mouseover', function(d,index) {
             // Use this to select the hovered element
+            var hoverformat = d3.format('.1f');
             var hovered = d3.select(this);
             // add hovered class to style the group
             hovered.classed('hovered', true);
@@ -288,18 +296,18 @@ function updateHeroChart() {
             hovered.append('text')
                 .attr('class', 'value')
                 .style('text-anchor', function(d) {
-                	if(d.winrate < 50) { return 'end'; }
-        			else { return 'start'; }
+                    if(d.winrate < 50) { return 'end'; }
+                    else { return 'start'; }
                 })
-				.style('font-size', '15px')
-				.style('fill', 'white')
-				.attr('transform', function(d) {
-					if(d.winrate < 50) { return 'translate('+[0, yScaleRate(d.winrate) + 8]+')rotate(-65)'; }
-        			else { return 'translate('+[-1, 0]+')rotate(-65)'; }
-            	})
+                .style('font-size', '15px')
+                .style('fill', 'white')
+                .attr('transform', function(d) {
+                    if(d.winrate < 50) { return 'translate('+[0, yScaleRate(d.winrate) + 8]+')rotate(-65)'; }
+                    else { return 'translate('+[-1, 0]+')rotate(-65)'; }
+                })
                 .attr('dx', '.5em')
                 .attr('dy', '.5em')
-                .text(d.winrate);
+                .text(hoverformat(index.winrate));
         })
         .on('mouseout', function(d) {
             // Clean up the actions that happened in mouseover
@@ -351,21 +359,21 @@ function updateHeroChart() {
             return Math.abs(yScaleRate(d.winrate));
         })
         .attr('fill', function(d){
-        	if(d.winrate < 50) { return 'yellow'; }
-        	else { return 'green'; }
+            if(d.winrate < 50) { return 'yellow'; }
+            else { return 'green'; }
         });
         
 /*      
-	var dotsRate = chartG.append('g')
-		.selectAll('circle')
-		.data(filteredLetters)
-		.enter()
-		.append('circle')
-		.attr('r', 5)
-		.attr('transform', function(d,i){
+    var dotsRate = chartG.append('g')
+        .selectAll('circle')
+        .data(filteredLetters)
+        .enter()
+        .append('circle')
+        .attr('r', 5)
+        .attr('transform', function(d,i){
             return 'translate('+[i * barBand + 10, chartHeight - yScaleWin(maxNum - d.num_win)]+')'; // Update position based on index
         })
-		.attr('fill', 'green');
+        .attr('fill', 'green');
 */
 
 

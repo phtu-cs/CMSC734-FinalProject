@@ -186,7 +186,7 @@ a:hover { color: black; }
 
 #itemPage img#itemlist{
   position: relative;
-  top:  -650px;
+  top:  -1450px;
   left: 1050px;
 }
 
@@ -231,7 +231,7 @@ left: 630px;
 
 
 
-#heroPage .axis-label {
+#heroPage .axis-label-left {
     text-anchor: middle;
     font-size: 12px;
     font-weight: semibold;

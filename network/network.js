@@ -71,18 +71,18 @@ var popularitySlider = d3.sliderHorizontal()
                            }
                             else
                            {
-                               return  0.05;
+                               return  0.2;
                            }
                         }).style('stroke-opacity',function (o) {
                              var a = false;
                             if(selectedVal !="")
                             {
                              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                             return a & o.weight>num?  0.1 : 0;
+                             return a & o.weight>num?  0.2 : 0;
                             }
                             else
                             {
-                                return o.weight >num?0.1:0;
+                                return o.weight >num?0.2:0;
                             }
                         });
                     });
@@ -174,7 +174,7 @@ popularitySlider.on('onchange', num => {
                            }
                             else
                            {
-                               return  0.1;
+                               return  0.2;
                            }
                         }).style('stroke-opacity',function (o) {
                              var a = false;
@@ -182,12 +182,12 @@ popularitySlider.on('onchange', num => {
                             if(selectedVal !="")
                             {
                              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                             return a & o[graphweight]>num?  0.1 : 0;
+                             return a & o[graphweight]>num?  0.2 : 0;
                             }
                             else
                             {
                                 //console.log(o[graphweight]);
-                                return o[graphweight]>num?  0.1 : 0; 
+                                return o[graphweight]>num?  0.2 : 0; 
                             }
                         })
                         //.attr('stroke-width',function(d){ return NetworklinkScale(d[graphweight]) } );   // more wide, more weight
@@ -206,7 +206,7 @@ function hiddenNodes(d,index) {
                 return index.index ==o.source.index | index.index==o.target.index ? 'red' : '#aaa';
             }
         }).style('stroke-opacity',function (o) {
-            return index.index==o.source.index | index.index==o.target.index ? (o[graphweight]>slidernum?  0.1 : 0): 0;
+            return index.index==o.source.index | index.index==o.target.index ? (o[graphweight]>slidernum?  0.2 : 0): 0;
         })
         //.attr('stroke-width',function(d){ return NetworklinkScale(d[graphweight]) } );   // more wide, more weight
     
@@ -293,7 +293,7 @@ function showNodes(d,index){
         //node.style("opacity",0.1);
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',function(o)
           {
-             return o[graphweight]>slidernum? 0.1 :0;
+             return o[graphweight]>slidernum? 0.2 :0;
           });
 
 
@@ -311,16 +311,16 @@ function showNodes(d,index){
              selected.each(function(d) { 
                if(d.index == o.source.index | d.index == o.target.index) {a= true;};  });
             if(networkcategory=="winningrate"){
-            return a ? 'green' : 0.1;
+            return a ? 'green' : 0.2;
          }
         else{ 
              //if(a==true) console.log("here");
-            return a ? 'red' : 0.1;
+            return a ? 'red' : 0.2;
         }
         }).style('stroke-opacity',function (o) {
              var a = false;
              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-             return a ? 0.1 : 0;
+             return a ? 0.2 : 0;
         });
         
       }
