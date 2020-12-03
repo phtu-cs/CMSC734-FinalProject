@@ -17,15 +17,16 @@
     </div>
 
     <style>
+    
     body {
       height: 100%;
-      width:100%;
+      width:  100%;
       margin: 0;
-      background-image: url('background-1.jpg');
+      background-image: url('background-3.jpg');
       background-repeat: no-repeat;
       background-position:left;
       background-size: cover;
-      overflow-x:hidden;
+      overflow-x: hidden;
 
     }
     </style>
@@ -45,12 +46,14 @@
                    <!-- <p style="text-align:center"> -->
                    <!-- </p> -->
                <h2 class="itemFigure1" style="text-align:center;font-family: fantasy; ">Project Overview</h2>
-                   <p style = "font-size: large; width:90%;  margin-left: auto;margin-right: auto;">
+                   <p style = "font-size: large; width:95%;  margin-left: auto; margin-right: auto;">
      In this project, we will research the problem of how the big data of the multiplayer video game (Dota2) affect the strategies made by teams and players. Further to this, we aim at producing a detailed interactive analysis to help users pick heroes, items, and win team fights.
      <br><br>
-     Multiplayer video games are becoming more and more popular nowadays, and the competition awards and the number of competitions each year are both fast-growing. The professional teams will be happy to have the insights of this data since they could provide their team and players better strategies for the games. For example, in Dota2, we could analyze the price-performance ratio of different equipment given rivals’ equipment and game levels. Besides, casual players may also refer to our data to have a better understanding of the game and improve their skills for the game.
+     Multiplayer video games are becoming more and more popular nowadays, and the competition awards and the number of competitions each year are both fast-growing. The professional teams will be happy to have the insights of this data since they could provide their team and players better strategies for the games. For example, in Dota2, we could analyze the price-performance ratio of different equipment given rivals’ equipment and hero choosing. Besides, casual players may also refer to our data to have a better understanding of the game and improve their skills for the game.
      <br><br>
-     Since it is becoming increasingly critical to choose the right strategies for players to win the game, the team leaders or data analyzers would ask questions such as which heroes to pick to achieve the highest win rate and what lane strategies should the players apply to increase their win rate. Outside the game, the team builders may also ask which player is better and should sign for their team during the player transfer window. Different regions in the world may have different preferences of strategies in the game, therefore, it will also be interesting for people to learn from players from other regions and find out the best strategies for them to win their games.
+     Since it is becoming increasingly critical to choose the right strategies for players to win the game, the team leaders or data analyzers would ask questions such as which heroes to pick to achieve the highest win rate and what lane strategies should the players apply to increase their win rate. Outside the game, the team builders may also ask which player is better and should sign for their team during the player transfer window. 
+     <br><br>
+     For this project, we focus on visualizing how the hero choosing and item choosing have a great influence on the winning rate. We followed our project design, trying to put various combinations of influential factors together into one graph for a coherent visualization. We also worked on the influence of team formation from the perspective of popularity and winning rate.
      </p>
                  </td>
                </tr>
@@ -59,8 +62,8 @@
                    <!-- <p style="text-align:center"> -->
                    <!-- </p> -->
                    <p style="text-align: center; width: 95%">
-         <img src="item.png" align="right" width="800" height="700">
-           <img src="heros.jpg" align="left" width="775" height="700">
+         <img src="item.png" align="center" width="700" height="600">
+           <img src="heros.jpg" align="center" width="700" height="600">
                    </p>
                  </td>
                </tr>
@@ -70,32 +73,25 @@
 
 
     <div id="heroPage">
-        <svg id="hero" width="1800" height="800" style="border: 1px solid #777; background-color: #424949;">
-	<div style="position: relative; top: 20px; left: 50px;">
-		<label for="rangeSelect">Sort by:</label>
-		<select class="custom-select small" id="categorySelect" onchange="onCategoryChanged()">
-			<option selected value="default">Default</option>
-			<option value="numwin">num_win</option>
-			<option value="winrate">winrate</option>
-			<option value="power (hp)">power (hp)</option>
-			<option value="weight (lb)">weight (lb)</option>
-			<option value="0-60 mph (s)">0-60 mph (s)</option>
-			<option value="year">year</option>
-		</select>
-	</div>
-    <div style="position: relative; top: 20px; left: 250px;">
-		<label for="rangeSelect">Display Range:</label>
-		<select class="custom-select small" id="rangeSelect" onchange="onRangeChanged()">
-			<option selected value="all">All</option>
-			<option value="top20">Top 20</option>
-			<option value="top50">Top 50</option>
-			<option value="power (hp)">power (hp)</option>
-			<option value="weight (lb)">weight (lb)</option>
-			<option value="0-60 mph (s)">0-60 mph (s)</option>
-			<option value="year">year</option>
-		</select>
-	</div>
-		</svg>
+        <h2 class="heroFigure" style="text-align:center;font-family: fantasy;">Hero Statistics</h2>
+        <svg id="hero" width="1620" height="720" style="border: 1px solid #E4DDDD; background-color: #E4DDDD;">
+  <div style="position: relative; top: 20px; left: 50px;">
+    <label for="rangeSelect">Sort by:</label>
+    <select class="custom-select small" id="HerocategorySelect" onchange="onHeroCategoryChanged()">
+      <option selected value="default">Hero Id</option>
+      <option value="numwin">Num Win</option>
+      <option value="winrate">Win Rate</option>
+    </select>
+  </div>
+    <div style="position: relative; top: -20px; left: 250px;">
+    <label for="rangeSelect">Display Range:</label>
+    <select class="custom-select small" id="rangeSelect" onchange="onRangeChanged()">
+      <option selected value="all">All</option>
+      <option value="top20">Top 20</option>
+      <option value="top50">Top 50</option>
+    </select>
+  </div>
+    </svg>
     </div>
 
 
@@ -151,7 +147,7 @@
     <div id="NetworkPage">
         <h2 class="networkFigure" style="text-align:center;font-family: fantasy;">Hero NetWork</h2>
         <p class = networkFigureText style = "text-align: center">
-          This figure
+          This figure indicates the team formation from the perspective of popularity and winning rate.
         </p>
         <div id="main" class = "box">
          <svg  id='graphsvg' width="1000" height="1000" >

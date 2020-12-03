@@ -1,10 +1,10 @@
 // Global function called when select element is changed
-function onCategoryChanged(value) {
-    var select = d3.select('#categorySelect').node();
+function onHeroCategoryChanged(value) {
+    var select = d3.select('#HerocategorySelect').node();
     // Get current value of select element
     filterKey = select.options[select.selectedIndex].value;
     // Update chart with the selected category of letters
-    updateChart();
+    updateHeroChart();
 }
 
 function onRangeChanged() {
@@ -12,7 +12,7 @@ function onRangeChanged() {
     // Get current value of select element, save to global chartScales
     range = select.options[select.selectedIndex].value;
     // Update chart
-    updateChart();
+    updateHeroChart();
 }
 
 // Load data and use this function to process each row
@@ -33,7 +33,7 @@ d3.selectAll('.filter')
         var clicked = d3.select(this);
         // Add the selected classname to element that was just clicked
         clicked.classed('selected', true);
-        updateChart(clicked.attr('value'));
+        updateHeroChart(clicked.attr('value'));
     });
 
 var svg = d3.select('svg');
@@ -104,11 +104,12 @@ d3.csv('winlose_indi.csv', dataPreprocessor).then(function(dataset) {
 
         svg.append('text')
             .attr('class', 'axis-label')
-            .attr('transform', 'translate('+[svgWidth / 2, 60]+')')
-            .text('Letter Frequency (%)')
-            .style('fill','white');
+            .attr('transform', 'translate('+[svgWidth / 2+20, 60]+')')
+            .text('Number of Win and Win Rate vs Hero')
+            .style('fill','Gray')
+            .style('font-size','20px');
 
-        // Add axes here, if you put them in the updateChart method, multiple axes will be added
+        // Add axes here, if you put them in the updateHeroChart method, multiple axes will be added
         // We'll go over how to update axes with interaction in the next labs
         svg.append('g')
             .attr('class', 'axisWin')
@@ -136,11 +137,11 @@ d3.csv('winlose_indi.csv', dataPreprocessor).then(function(dataset) {
         filterKey = 'default';
         range = 'default';
         
-        updateChart();
+        updateHeroChart();
     });
 
 
-function updateChart() {
+function updateHeroChart() {
 /*
     var filteredLetters = letters.filter(function(d){
         return lettersMap[filterKey].indexOf(d.letter) >= 0;
@@ -260,7 +261,7 @@ function updateChart() {
             hovered.append('text')
                 .attr('class', 'value')
                 .style('text-anchor', 'end')
-				.style('font-size', '10px')
+				.style('font-size', '15px')
 				.style('fill','white')
 				.attr('transform', function(d) {
             		return 'translate('+[0, yScaleLose(d.num_lose) + 8]+')rotate(-65)';
@@ -290,7 +291,7 @@ function updateChart() {
                 	if(d.winrate < 50) { return 'end'; }
         			else { return 'start'; }
                 })
-				.style('font-size', '10px')
+				.style('font-size', '15px')
 				.style('fill', 'white')
 				.attr('transform', function(d) {
 					if(d.winrate < 50) { return 'translate('+[0, yScaleRate(d.winrate) + 8]+')rotate(-65)'; }
