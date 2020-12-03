@@ -15,41 +15,57 @@ d3.csv("item/item-match.csv").then(function(data) {
     data.forEach(function(d) {
         item_matchStatus.push([d["match_id"], d["radiant_win"]]);
     });
+    read1();
 });
 
-d3.csv("item/item-players.csv").then(function(data) {
-    var count = 0;
-    data.forEach(function(d) {
-        if (count < 5) {    //True or False means if this player is playing as Radiant
-            matchItems.push([d["match_id"], "True", d["item_0"], d["item_1"], d["item_2"], d["item_3"], d["item_4"], d["item_5"], d["hero_id"]]);
-            count ++;
-        } else {
-            matchItems.push([d["match_id"], "False", d["item_0"], d["item_1"], d["item_2"], d["item_3"], d["item_4"], d["item_5"], d["hero_id"]]);
-            count = (count + 1)%10;
-        }
+function read1() {
+    d3.csv("item/item-players.csv").then(function(data) {
+        var count = 0;
+        data.forEach(function(d) {
+            if (count < 5) {    //True or False means if this player is playing as Radiant
+                matchItems.push([d["match_id"], "True", d["item_0"], d["item_1"], d["item_2"], d["item_3"], d["item_4"], d["item_5"], d["hero_id"]]);
+                count ++;
+            } else {
+                matchItems.push([d["match_id"], "False", d["item_0"], d["item_1"], d["item_2"], d["item_3"], d["item_4"], d["item_5"], d["hero_id"]]);
+                count = (count + 1)%10;
+            }
+        });
+        read2();
+
     });
-});
 
-d3.csv("item/item-item_info.csv").then(function(data) {
-    data.forEach(function(d) {
-        itemIdName.push([d["item_id"], d["item_name"]]);
-        if (d["core_item"] == "1") {
-            coreItems.push(d["item_id"]);
-            allItems.push(d["item_id"]);
-        } else if (d["core_item"] == "2") {
-            supportItems.push(d["item_id"]);
-            allItems.push(d["item_id"]);
-        }
+}
+
+function read2() {
+    d3.csv("item/item-item_info.csv").then(function(data) {
+        data.forEach(function(d) {
+            itemIdName.push([d["item_id"], d["item_name"]]);
+            if (d["core_item"] == "1") {
+                coreItems.push(d["item_id"]);
+                allItems.push(d["item_id"]);
+            } else if (d["core_item"] == "2") {
+                supportItems.push(d["item_id"]);
+                allItems.push(d["item_id"]);
+            }
+        });
+        read3();
     });
-});
 
-d3.csv("item/item-hero_names.csv").then(function(data) {
-    data.forEach(function(d) {
-        item_heroNames.push([d["hero_id"], d["name"]]);
-    })
-})
+}
 
+function read3() {
+    d3.csv("item/item-hero_names.csv").then(function(data) {
+        data.forEach(function(d) {
+            item_heroNames.push([d["hero_id"], d["name"]]);
+        });
+        countingWinRate();
+        sortItemByWinrate();
+        updateOptions();
+        updateChart(top20Winrate, allItems);
+        updateItemHeroChart(null);
+    });
 
+}
 
 
 //Counting the item winrate
@@ -113,14 +129,6 @@ function sortItemByWinrate() {
 
 /**************************************************/
 /**************************************************/
-setTimeout(() => {
-    countingWinRate();
-    sortItemByWinrate();
-    updateOptions();
-    updateChart(top20Winrate, allItems);
-    updateItemHeroChart(null);
-
-}, 2000);
 //Ploting the graph
 
 var item_svg = d3.select("#items");
@@ -225,7 +233,7 @@ function updateChart(dataForShow, itemCategory) {
            return 'translate('+[10, i * item_barBand + 4]+')';
        });
 
-    // change bar looks like (rounded + layered color) 
+    // change bar looks like (rounded + layered color)
     var rect = barsEnter.append('rect')
                         .attr('class', 'rect')
                         .attr('transform', 'translate(60,0)')
