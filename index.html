@@ -17,7 +17,7 @@
     </div>
 
     <style>
-    
+
     body {
       height: 100%;
       width:  100%;
@@ -49,9 +49,9 @@
                    <p style = "font-size: large; width:95%;  margin-left: auto; margin-right: auto;">
      In this project, we will research the problem of how the big data of the multiplayer video game (Dota2) affect the strategies made by teams and players. Further to this, we aim at producing a detailed interactive analysis to help users pick heroes, items, and win team fights. Multiplayer video games are becoming more and more popular nowadays, and the competition awards and the number of competitions each year are both fast-growing. The professional teams will be happy to have the insights of this data since they could provide their team and players better strategies for the games. For example, in Dota2, we could analyze the price-performance ratio of different equipment given rivals’ equipment and hero choosing. Besides, casual players may also refer to our data to have a better understanding of the game and improve their skills for the game.
      <br><br>
-     Since it is becoming increasingly critical to choose the right strategies for players to win the game, the team leaders or data analyzers would ask questions such as which heroes to pick to achieve the highest win rate and what lane strategies should the players apply to increase their win rate. Outside the game, the team builders may also ask which player is better and should sign for their team during the player transfer window. 
+     Since it is becoming increasingly critical to choose the right strategies for players to win the game, the team leaders or data analyzers would ask questions such as which heroes to pick to achieve the highest win rate and what lane strategies should the players apply to increase their win rate. Outside the game, the team builders may also ask which player is better and should sign for their team during the player transfer window.
      <br><br>
-     For this project, we focus on visualizing how the hero choosing and item choosing to have a great influence on the winning rate. In the beginning, we all spent much time preprocessing dataset from Kaggle by taking advantage of. json and .csv library in python to combine columns, delete null values, and edit outlier data. We followed our project design, trying to put various combinations of influential factors together into one graph for a coherent visualization. We also worked on the influence of team formation from the perspective of popularity and winning rate. 
+     For this project, we focus on visualizing how the hero choosing and item choosing to have a great influence on the winning rate. In the beginning, we all spent much time preprocessing dataset from Kaggle by taking advantage of. json and .csv library in python to combine columns, delete null values, and edit outlier data. We followed our project design, trying to put various combinations of influential factors together into one graph for a coherent visualization. We also worked on the influence of team formation from the perspective of popularity and winning rate.
      </p>
                  </td>
                </tr>
@@ -124,19 +124,18 @@
         <text class="itemFigure2" style="text-align:center"> This figure shows item with its highest purchase
             frequency Heroes</text>
         <svg id="itemHero" width="800" height="600" align="center">
-             
+
         </svg>
         <div class="select_class">
             <label for="itemHeroSelect" id ="itemHeroLabel">Item: </label>
             <select class="custom-select" id="itemHeroSelect" onchange="onItemHeroChanged()">
-                <option selected value="NoSelection">No selection</option>
             </select>
         </div>
         <div class = "img_heroitem">
           <img src="heroitem_lina.jpg" align="center" width="256" height="144" id="itemhero_imgone">
           <img src="heroitem_medusa.jpg" align="center" width="256" height="144" id="itemhero_imgtwo">
           <img src="heroitem_pugna.jpg" align="center" width="256" height="144" id="itemhero_imgthree">
-        </div> 
+        </div>
         <div>
           <img src="itemlist.png" align="center" width="468" height="396" id="itemlist">
         </div>

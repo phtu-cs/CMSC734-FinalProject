@@ -118,7 +118,7 @@ setTimeout(() => {
     sortItemByWinrate();
     updateOptions();
     updateChart(top20Winrate, allItems);
-    updateItemHeroChart(null);
+    updateItemHeroChart('blink');
 
 }, 2000);
 //Ploting the graph
@@ -175,7 +175,7 @@ function updateChart(dataForShow, itemCategory) {
             .attr("color", "white")
             .text("Win Rate (%)");
     } else {    //Purchase frequency
-        maxVal = 150000;
+        maxVal = 30000;
         var xScale = d3.scaleLinear()
                             .domain([0, maxVal])
                             .range([0,item_chartWidth]);
@@ -192,7 +192,7 @@ function updateChart(dataForShow, itemCategory) {
             .attr("id", "labelOfItemFigure")
             .attr("transform", "translate(300,30)")
             .attr("color", "white")
-            .text("Pruchase Frequency (Every 50,000 Games)");
+            .text("Pruchase Frequency (Every 10,000 Games)");
     }
 
 
@@ -225,7 +225,7 @@ function updateChart(dataForShow, itemCategory) {
            return 'translate('+[10, i * item_barBand + 4]+')';
        });
 
-    // change bar looks like (rounded + layered color) 
+    // change bar looks like (rounded + layered color)
     var rect = barsEnter.append('rect')
                         .attr('class', 'rect')
                         .attr('transform', 'translate(60,0)')
@@ -331,6 +331,7 @@ function updateOptions() {
 }
 
 function updateItemHeroChart(itemSelection) {
+    var svg2 = d3.select("#itemHero");
     //remove previous graphs first
     var removeItem = document.getElementById("itemText");
     if (removeItem != null) {
@@ -356,46 +357,127 @@ function updateItemHeroChart(itemSelection) {
     if (removeHero4 != null) {
         removeHero4.remove();
     }
-
-    var itemCircle = d3.select("#itemHero")
-                    .append("circle")
-                    .attr("class", "itemCircle")
-                    .attr("cx", 200)
-                    .attr("cy", 300)
-                    .attr("r", 20);
-    var itemName;
-    var item_heroNamesForText;
-    if (itemSelection == null) {
-        itemName = "No selection";
-        item_heroNamesForText = ["No selection", "No selection", "No selection", "No selection", "No selection"];
-    } else {
-        itemName = itemSelection;
-        var itemId;
-        item_heroNamesForText = [];
-        for (var i=0;i<itemIdName.length;i++) {
-            if (itemIdName[i][1] == itemSelection) {
-                itemId = itemIdName[i][0];
-                for (var j=0;j<itemWithHeros.length;j++) {
-                    if (itemWithHeros[j][0] == itemId) {
-                        item_heroNamesForText.push(itemWithHeros[i][1]);
-                        item_heroNamesForText.push(itemWithHeros[i][2]);
-                        item_heroNamesForText.push(itemWithHeros[i][3]);
-                        item_heroNamesForText.push(itemWithHeros[i][4]);
-                        item_heroNamesForText.push(itemWithHeros[i][5]);
-                    }
-                }
-
-            }
+    var removeItemCircle = document.getElementById("itemCircle");
+    if (removeItemCircle != null) {
+        removeItemCircle.remove();
+    }
+    for (var i=1;i<=5;i++) {
+        var removeHeroCircle = document.getElementById("heroCircle" + i);
+        if (removeHeroCircle != null) {
+            removeHeroCircle.remove();
         }
+    }
 
-        for (var i=0;i<item_heroNamesForText.length;i++) {
-            for (var j=0; j<item_heroNames.length;j++) {
-                if (item_heroNames[j][0] == item_heroNamesForText[i]) {
-                    item_heroNamesForText[i] = item_heroNames[j][1];
+
+
+    //draw the arrows
+    const markerBoxWidth = 20;
+    const markerBoxHeight = 20;
+    const refX = markerBoxWidth / 2;
+    const refY = markerBoxHeight / 2;
+    const markerWidth = markerBoxWidth / 2;
+    const markerHeight = markerBoxHeight / 2;
+    const arrowPoints = [[0, 0], [0, 20], [20, 10]];
+    d3.select("#itemHero")
+        .append('defs')
+        .append('marker')
+        .attr('id', 'arrow')
+        .attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight])
+        .attr('refX', refX)
+        .attr('refY', refY)
+        .attr('markerWidth', markerBoxWidth)
+        .attr('markerHeight', markerBoxHeight)
+        .attr('orient', 'auto-start-reverse')
+        .append('path')
+        .attr('d', d3.line()(arrowPoints))
+        .attr('stroke', 'black');
+    d3.select("#itemHero").append('path')
+                          .attr('d', d3.line()([[200, 300], [570, 100]]))
+                          .attr('stroke', 'black')
+                          .attr('marker-end', 'url(#arrow)')
+                          .attr('fill', 'none');
+    d3.select("#itemHero").append('path')
+                        .attr('d', d3.line()([[200, 300], [570, 200]]))
+                        .attr('stroke', 'black')
+                        .attr('marker-end', 'url(#arrow)')
+                        .attr('fill', 'none');
+    d3.select("#itemHero").append('path')
+                        .attr('d', d3.line()([[200, 300], [570, 300]]))
+                        .attr('stroke', 'black')
+                        .attr('marker-end', 'url(#arrow)')
+                        .attr('fill', 'none');
+    d3.select("#itemHero").append('path')
+                        .attr('d', d3.line()([[200, 300], [570, 400]]))
+                        .attr('stroke', 'black')
+                        .attr('marker-end', 'url(#arrow)')
+                        .attr('fill', 'none');
+    d3.select("#itemHero").append('path')
+                        .attr('d', d3.line()([[200, 300], [570, 500]]))
+                        .attr('stroke', 'black')
+                        .attr('marker-end', 'url(#arrow)')
+                        .attr('fill', 'none');
+
+    //update selection data
+    var itemName;
+    var itemId;
+    var item_heroNamesForText;
+    itemName = itemSelection;
+    item_heroIdForText = [];
+    item_heroNamesForText = [];
+    for (var i=0;i<itemIdName.length;i++) {
+        if (itemIdName[i][1] == itemSelection) {
+            itemId = itemIdName[i][0];
+            for (var j=0;j<itemWithHeros.length;j++) {
+                if (itemWithHeros[j][0] == itemId) {
+                    item_heroIdForText.push(itemWithHeros[i][1]);
+                    item_heroIdForText.push(itemWithHeros[i][2]);
+                    item_heroIdForText.push(itemWithHeros[i][3]);
+                    item_heroIdForText.push(itemWithHeros[i][4]);
+                    item_heroIdForText.push(itemWithHeros[i][5]);
+                    item_heroNamesForText.push(itemWithHeros[i][1]);
+                    item_heroNamesForText.push(itemWithHeros[i][2]);
+                    item_heroNamesForText.push(itemWithHeros[i][3]);
+                    item_heroNamesForText.push(itemWithHeros[i][4]);
+                    item_heroNamesForText.push(itemWithHeros[i][5]);
                 }
+            }
+
+        }
+    }
+
+    for (var i=0;i<item_heroNamesForText.length;i++) {
+        for (var j=0; j<item_heroNames.length;j++) {
+            if (item_heroNames[j][0] == item_heroNamesForText[i]) {
+                item_heroNamesForText[i] = item_heroNames[j][1];
             }
         }
     }
+
+
+    //draw the circles
+    var itemCircle = d3.select("#itemHero")
+                    .append("circle")
+                    .attr("id", "itemCircle")
+                    .attr("cx", 200)
+                    .attr("cy", 300)
+                    .attr("r", 20)
+                    .style("fill", "url(#item_icon" + itemId + ")");
+
+    var defs = svg2.append('svg:defs');
+    defs.append("svg:pattern")
+        .attr("id", "item_icon" + itemId)
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 20)
+        .attr("y", 0)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("svg:image")
+        .attr("xlink:href", 'item_icon/' + itemId + '.png')
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
 
     var itemText = d3.select("#itemHero")
                         .append("text")
@@ -405,36 +487,124 @@ function updateItemHeroChart(itemSelection) {
                         .attr("y", 280)
                         .attr("text-anchor", "middle");
 
+    //update hero figure
+    var defsHero1 = svg2.append('svg:defs');
+    defsHero1.append("svg:pattern")
+        .attr("id", "hero_icon" + item_heroIdForText[0])
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 20)
+        .attr("y", 0)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("svg:image")
+        .attr("xlink:href", 'hero_icon/' + item_heroIdForText[0] + '.png')
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
     var heroCircle1 = d3.select("#itemHero")
                     .append("circle")
-                    .attr("class", "heroCircle")
+                    .attr("id", "heroCircle1")
                     .attr("cx", 600)
                     .attr("cy", 100)
-                    .attr("r", 20);
+                    .attr("r", 20)
+                    .style("fill", "url(#hero_icon" + item_heroIdForText[0] + ")");
+
+
+    var defsHero2 = svg2.append('svg:defs');
+    defsHero2.append("svg:pattern")
+        .attr("id", "hero_icon" + item_heroIdForText[1])
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 20)
+        .attr("y", 20)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("svg:image")
+        .attr("xlink:href", 'hero_icon/' + item_heroIdForText[1] + '.png')
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
     var heroCircle2 = d3.select("#itemHero")
                     .append("circle")
-                    .attr("class", "heroCircle")
+                    .attr("id", "heroCircle2")
                     .attr("cx", 600)
                     .attr("cy", 200)
-                    .attr("r", 20);
+                    .attr("r", 20)
+                    .style("fill", "url(#hero_icon" + item_heroIdForText[1] + ")");
+
+
+    var defsHero3 = svg2.append('svg:defs');
+    defsHero3.append("svg:pattern")
+        .attr("id", "hero_icon" + item_heroIdForText[2])
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 20)
+        .attr("y", 0)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("svg:image")
+        .attr("xlink:href", 'hero_icon/' + item_heroIdForText[2] + '.png')
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
     var heroCircle3 = d3.select("#itemHero")
                     .append("circle")
-                    .attr("class", "heroCircle")
+                    .attr("id", "heroCircle3")
                     .attr("cx", 600)
                     .attr("cy", 300)
-                    .attr("r", 20);
+                    .attr("r", 20)
+                    .style("fill", "url(#hero_icon" + item_heroIdForText[2] + ")");
+
+
+    var defsHero4 = svg2.append('svg:defs');
+    defsHero4.append("svg:pattern")
+        .attr("id", "hero_icon" + item_heroIdForText[3])
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 20)
+        .attr("y", 20)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("svg:image")
+        .attr("xlink:href", 'hero_icon/' + item_heroIdForText[3] + '.png')
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
     var heroCircle4 = d3.select("#itemHero")
                     .append("circle")
-                    .attr("class", "heroCircle")
+                    .attr("id", "heroCircle4")
                     .attr("cx", 600)
                     .attr("cy", 400)
-                    .attr("r", 20);
+                    .attr("r", 20)
+                    .style("fill", "url(#hero_icon" + item_heroIdForText[3] + ")");
+
+    var defsHero5 = svg2.append('svg:defs');
+    defsHero5.append("svg:pattern")
+        .attr("id", "hero_icon" + item_heroIdForText[4])
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 20)
+        .attr("y", 0)
+        .attr("patternUnits", "userSpaceOnUse")
+        .append("svg:image")
+        .attr("xlink:href", 'hero_icon/' + item_heroIdForText[4] + '.png')
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
     var heroCircle5 = d3.select("#itemHero")
                     .append("circle")
-                    .attr("class", "heroCircle")
+                    .attr("id", "heroCircle5")
                     .attr("cx", 600)
                     .attr("cy", 500)
-                    .attr("r", 20);
+                    .attr("r", 20)
+                    .style("fill", "url(#hero_icon" + item_heroIdForText[4] + ")");
 
     var heroText1 = d3.select("#itemHero")
                         .append("text")
@@ -472,53 +642,6 @@ function updateItemHeroChart(itemSelection) {
                         .attr("y", 480)
                         .attr("text-anchor", "middle");
 
-    const markerBoxWidth = 20;
-    const markerBoxHeight = 20;
-    const refX = markerBoxWidth / 2;
-    const refY = markerBoxHeight / 2;
-    const markerWidth = markerBoxWidth / 2;
-    const markerHeight = markerBoxHeight / 2;
-    const arrowPoints = [[0, 0], [0, 20], [20, 10]];
-
-    d3.select("#itemHero")
-        .append('defs')
-        .append('marker')
-        .attr('id', 'arrow')
-        .attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight])
-        .attr('refX', refX)
-        .attr('refY', refY)
-        .attr('markerWidth', markerBoxWidth)
-        .attr('markerHeight', markerBoxHeight)
-        .attr('orient', 'auto-start-reverse')
-        .append('path')
-        .attr('d', d3.line()(arrowPoints))
-        .attr('stroke', 'black');
-
-    d3.select("#itemHero").append('path')
-                          .attr('d', d3.line()([[200, 300], [570, 100]]))
-                          .attr('stroke', 'black')
-                          .attr('marker-end', 'url(#arrow)')
-                          .attr('fill', 'none');
-    d3.select("#itemHero").append('path')
-                        .attr('d', d3.line()([[200, 300], [570, 200]]))
-                        .attr('stroke', 'black')
-                        .attr('marker-end', 'url(#arrow)')
-                        .attr('fill', 'none');
-    d3.select("#itemHero").append('path')
-                        .attr('d', d3.line()([[200, 300], [570, 300]]))
-                        .attr('stroke', 'black')
-                        .attr('marker-end', 'url(#arrow)')
-                        .attr('fill', 'none');
-    d3.select("#itemHero").append('path')
-                        .attr('d', d3.line()([[200, 300], [570, 400]]))
-                        .attr('stroke', 'black')
-                        .attr('marker-end', 'url(#arrow)')
-                        .attr('fill', 'none');
-    d3.select("#itemHero").append('path')
-                        .attr('d', d3.line()([[200, 300], [570, 500]]))
-                        .attr('stroke', 'black')
-                        .attr('marker-end', 'url(#arrow)')
-                        .attr('fill', 'none');
 
 }
 
