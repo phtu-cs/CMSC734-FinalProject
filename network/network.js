@@ -3,10 +3,25 @@ var graphsvg = d3.select('#graphsvg');
 var graphwidth = +graphsvg.attr('width');
 var graphheight = +graphsvg.attr('height');
 
-var NetworkcolorScale = d3.scaleOrdinal(d3.schemeTableau10);
+var NetworkcolorScale = d3.scaleSequential(d3["interpolateYlOrRd"])
+    .domain([-20, 15]);
+
+var NetworkcolorScale2 = d3.scaleSequential(d3["interpolatePuRd"])
+    .domain([10, 8000]);
+
+
 var NetworklinkScale = d3.scaleLinear()
+    .domain([-10, 15])
+    .range([1,20]);
+
+
+var NetworklinkScale2 = d3.scaleLinear()
     .domain([10, 8000])
-    .range([5,15]);
+    .range([1,20]);
+
+
+// var NetworkLinkColorScale = d3.scaleSequential(d3["interpolateYlOrRd"])
+//     .domain([10, 8000])
 
 var simulation = d3.forceSimulation()
                     .force('link', d3.forceLink())
@@ -63,10 +78,10 @@ var popularitySlider = d3.sliderHorizontal()
 
                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
                             if(networkcategory=="winningrate"){
-                            return a ? 'green' : '#aaa';
+                            return a ? NetworkcolorScale(d[graphweight])  : '#aaa';
                         }
                         else{
-                            return a ? 'red' : '#aaa';
+                            return a ? NetworkcolorScale2(d[graphweight]) : '#aaa';
                         }
                            }
                             else
@@ -78,11 +93,11 @@ var popularitySlider = d3.sliderHorizontal()
                             if(selectedVal !="")
                             {
                              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                             return a & o.weight>num?  0.2 : 0;
+                             return a & o.weight>num?  0.8 : 0;
                             }
                             else
                             {
-                                return o.weight >num?0.2:0;
+                                return o.weight >num?0.8:0;
                             }
                         });
                     });
@@ -166,10 +181,11 @@ popularitySlider.on('onchange', num => {
 
                             selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
                             if(networkcategory=="winningrate"){
-                            return a ? 'green' : '#aaa';
+                            return  a ? NetworkcolorScale(o[graphweight]) : '#aaa';
                              }
                            else{
-                            return a ? 'red' : '#aaa';
+                            // console.log(NetworkcolorScale(d[graphweight]));
+                            return a ? NetworkcolorScale2(o[graphweight]) : '#aaa';
                           }
                            }
                             else
@@ -182,15 +198,22 @@ popularitySlider.on('onchange', num => {
                             if(selectedVal !="")
                             {
                              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-                             return a & o[graphweight]>num?  0.2 : 0;
+                             return a & o[graphweight]>num?  0.8 : 0;
                             }
                             else
                             {
                                 //console.log(o[graphweight]);
-                                return o[graphweight]>num?  0.2 : 0; 
+                                return o[graphweight]>num?  0.8 : 0; 
                             }
                         })
-                        //.attr('stroke-width',function(d){ return NetworklinkScale(d[graphweight]) } );   // more wide, more weight
+                        .style('stroke-width',function(d){ 
+                            if(networkcategory=="winningrate"){
+                            return NetworklinkScale(d[graphweight]);
+                        }else{
+                            return NetworklinkScale2(d[graphweight]);
+                        }
+                    }
+                         )  
                         });
                          
 
@@ -200,15 +223,15 @@ function hiddenNodes(d,index) {
 
         linkEnter.style("stroke", function (o) {           
             if(networkcategory=="winningrate"){
-                return index.index ==o.source.index | index.index==o.target.index ? 'green' : '#aaa';
+                return index.index ==o.source.index | index.index==o.target.index ?  NetworkcolorScale(o[graphweight]) : '#aaa';
             }
             else{
-                return index.index ==o.source.index | index.index==o.target.index ? 'red' : '#aaa';
+                return index.index ==o.source.index | index.index==o.target.index ?  NetworkcolorScale2(o[graphweight]) : '#aaa';
             }
         }).style('stroke-opacity',function (o) {
-            return index.index==o.source.index | index.index==o.target.index ? (o[graphweight]>slidernum?  0.2 : 0): 0;
+            return index.index==o.source.index | index.index==o.target.index ? (o[graphweight]>slidernum?  0.8 : 0): 0;
         })
-        //.attr('stroke-width',function(d){ return NetworklinkScale(d[graphweight]) } );   // more wide, more weight
+        .style('stroke-width',function(d){ if(networkcategory=="winningrate"){return NetworklinkScale(d[graphweight]);}else{return NetworklinkScale2(d[graphweight]);} } );   // more wide, more weight
     
 }
 
@@ -216,7 +239,7 @@ function showNodes(d,index){
 
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',function(o)
             {
-                return o[graphweight]>slidernum?  0.1 : 0;
+                return o[graphweight]>slidernum?  0.8 : 0;
             });
             }
 
@@ -232,7 +255,7 @@ function showNodes(d,index){
                          })
                      .attr('x', -10)
                      .attr('y', 18)
-                     .attr('font-size',10)
+                     .attr('font-size',15)
                      .attr('font-weight',10);
 
     nodes.append("title")
@@ -293,7 +316,7 @@ function showNodes(d,index){
         //node.style("opacity",0.1);
         linkEnter.style("stroke", '#aaa').style('stroke-opacity',function(o)
           {
-             return o[graphweight]>slidernum? 0.2 :0;
+             return o[graphweight]>slidernum? 0.8 :0;
           });
 
 
@@ -311,17 +334,18 @@ function showNodes(d,index){
              selected.each(function(d) { 
                if(d.index == o.source.index | d.index == o.target.index) {a= true;};  });
             if(networkcategory=="winningrate"){
-            return a ? 'green' : 0.2;
+            return a ? NetworkcolorScale(o[graphweight]) : 0.2;
          }
         else{ 
              //if(a==true) console.log("here");
-            return a ? 'red' : 0.2;
+            return a ? NetworkcolorScale2(o[graphweight]) : 0.2;
         }
         }).style('stroke-opacity',function (o) {
              var a = false;
              selected.each(function(d) { if(d.index == o.source.index | d.index == o.target.index) {a= true;}  });
-             return a ? 0.2 : 0;
-        });
+             return a ? 0.8 : 0;
+        })
+        .style('stroke-width',function(o){  if(networkcategory=="winningrate"){return NetworklinkScale(o[graphweight]);}else{return NetworklinkScale2(o[graphweight]);}  } );;
         
       }
 }
