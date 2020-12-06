@@ -117,7 +117,7 @@ setTimeout(() => {
     countingWinRate();
     sortItemByWinrate();
     updateOptions();
-    updateChart(top20Winrate, allItems);
+    updateChart(top20Winrate, allItems,"winrate");
     updateItemHeroChart('blink');
 
 }, 2000);
@@ -140,7 +140,7 @@ var item_chartG = item_svg.append('g')
                 .attr('transform', 'translate('+[100, item_padding.t]+')');
 item_chartG.selectAll('.bar').data();
 
-function updateChart(dataForShow, itemCategory) {
+function updateChart(dataForShow, itemCategory,Category) {
     var removeAxis = document.getElementById("axisOfItemFigure");
     if (removeAxis != null) {
         removeAxis.remove();
@@ -226,7 +226,8 @@ function updateChart(dataForShow, itemCategory) {
        });
 
     // change bar looks like (rounded + layered color)
-    var rect = barsEnter.append('rect')
+    var rect = barsEnter.merge(barsEnter)
+                        .append('rect')
                         .attr('class', 'rect')
                         .attr('transform', 'translate(60,0)')
                         .attr('height', item_barHeight)
@@ -234,7 +235,14 @@ function updateChart(dataForShow, itemCategory) {
                             return xScale(d[2]);
                         })
                         .attr("rx",3)
-                        .attr("ry",5);
+                        .attr("ry",5)
+                        .style('fill',function(o)
+                        {
+                            if(Category==="frequency")
+                            return "url('#FrequencyGradient')";
+                            else if(Category ==="winrate")
+                            return "url('#WinGradient')";
+                        });
 
     barsEnter.append('text')
         .attr('x', -90)
@@ -258,19 +266,19 @@ function onCategoryChanged() {
 
     if (stat == "top20Winrate") {
         if (category == "allItems") {
-            updateChart(top20Winrate, allItems);
+            updateChart(top20Winrate, allItems,"winrate");
         } else if (category == "coreItems") {
-            updateChart(top20Winrate, coreItems);
+            updateChart(top20Winrate, coreItems, "winrate");
         } else {
-            updateChart(top20Winrate, supportItems);
+            updateChart(top20Winrate, supportItems, "winrate");
         }
     } else if (stat == "top20Frequency"){
         if (category == "allItems") {
-            updateChart(top20Frequency, allItems);
+            updateChart(top20Frequency, allItems,"frequency");
         } else if (category == "coreItems") {
-            updateChart(top20Frequency, coreItems);
+            updateChart(top20Frequency, coreItems,"frequency");
         } else {
-            updateChart(top20Frequency, supportItems);
+            updateChart(top20Frequency, supportItems,"frequency");
         }
     }
 }

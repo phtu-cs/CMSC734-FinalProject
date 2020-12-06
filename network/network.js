@@ -11,13 +11,13 @@ var NetworkcolorScale2 = d3.scaleSequential(d3["interpolatePuRd"])
 
 
 var NetworklinkScale = d3.scaleLinear()
-    .domain([-10, 15])
-    .range([1,20]);
+    .domain([-0.10, 0.15])
+    .range([0.5,3.5]);
 
 
 var NetworklinkScale2 = d3.scaleLinear()
     .domain([10, 8000])
-    .range([1,20]);
+    .range([0.6,10.5]);
 
 
 // var NetworkLinkColorScale = d3.scaleSequential(d3["interpolateYlOrRd"])
