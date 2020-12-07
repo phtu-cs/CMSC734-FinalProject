@@ -72,8 +72,8 @@
 
     <div id="heroPage">
         <h2 class="heroFigure" style="text-align:center;font-family: fantasy;">Hero Statistics</h2>
-        <svg id="hero" width="1620" height="720" style="border: 1px solid #E4DDDD; background-color: #E4DDDD;">
-  <div style="position: relative; top: 20px; left: 50px;">
+        <svg id="hero" width="1620" height="720" style="border: 1px solid #E4DDDD; background-color: #E4DDDD;position: relative; left: 125px">
+  <div style="position: relative; top: 20px; left: 175px;">
     <label for="rangeSelect">Sort by:</label>
     <select class="custom-select small" id="HerocategorySelect" onchange="onHeroCategoryChanged()">
       <option selected value="default">Hero Id</option>
@@ -81,7 +81,7 @@
       <option value="winrate">Win Rate</option>
     </select>
   </div>
-    <div style="position: relative; top: -20px; left: 250px;">
+    <div style="position: relative; top: -20px; left: 375px;">
     <label for="rangeSelect">Display Range:</label>
     <select class="custom-select small" id="rangeSelect" onchange="onRangeChanged()">
       <option selected value="all">All</option>
@@ -109,14 +109,14 @@
          </linearGradient>
           </defs>
         </svg>
-        <div class="select_class">
+        <div class="select_class" style= "position: relative; left: 100px">
             <label for="statSelect">Statistics: </label>
             <select class="custom-select" id="statSelect" onchange="onCategoryChanged()">
               <option selected value="top20Winrate">Win-Rate</option>
               <option value="top20Frequency">Purchase-Frequency</option>
             </select>
         </div>
-        <div class="select_class">
+        <div class="select_class" style= "position: relative; left: 100px">
             <label for="categorySelect">Items: </label>
             <select class="custom-select" id="categorySelect" onchange="onCategoryChanged()">
               <option selected value="allItems">All Items</option>
