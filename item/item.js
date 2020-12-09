@@ -229,6 +229,8 @@ function updateChart(dataForShow, itemCategory,Category) {
     var rect = barsEnter.merge(barsEnter)
                         .append('rect')
                         .attr('class', 'rect')
+                        .transition()
+                        .duration(1000)
                         .attr('transform', 'translate(60,0)')
                         .attr('height', item_barHeight)
                         .attr('width', function(d){

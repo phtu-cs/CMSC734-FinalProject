@@ -95,11 +95,28 @@ a:hover { color: black; }
   display: block;
 }
 
+
+
+#mainPage {
+    margin:auto;
+}
 #mainPage text {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+}
+
+.Overview {
+    background: #d9d9d9;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+#itemPage {
+
 }
 
 #itemPage text {
@@ -186,46 +203,41 @@ a:hover { color: black; }
 
 #itemPage img#itemlist{
   position: relative;
-  top:  -1450px;
-  left: 1050px;
+  top:  -1600px;
+  left: 900px;
 }
 
-
+#NetWorkPage {
+}
 
 #NetworkPage .link {
   stroke: #aaa;
   stroke-opacity: 0.05;
 }
-
 /*no change currently */
-
 #NetworkPage .node .circle {
   stroke: #aaa;
-  stroke-width: 1;  
+  stroke-width: 1;
 }
 #NetworkPage .node .circle:hover {
   stroke: #999;
-  stroke-width: 2;  
+  stroke-width: 2;
 }
 
-
-
-#NetworkPage svg#graphsvg{ 
+#NetworkPage svg#graphsvg{
   border: 0;
 }
 
 #NetworkPage input#search,#NetworkPage button#searchbutton{
-
-position: relative;
-top:  -1100px;
-left: 1040px;
+    position: relative;
+    top:  -1100px;
+    left: 1040px;
 }
 
 #NetworkPage label#SliderLabel,#NetworkPage select#SliderSelect{
-
-position: relative;
-top:  -1200px;
-left: 630px;
+    position: relative;
+    top:  -1200px;
+    left: 630px;
 
 }
 
