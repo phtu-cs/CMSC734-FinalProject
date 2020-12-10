@@ -20,8 +20,6 @@ var NetworklinkScale2 = d3.scaleLinear()
     .range([1,10.9]);
 
 
-// var NetworkLinkColorScale = d3.scaleSequential(d3["interpolateYlOrRd"])
-//     .domain([10, 8000])
 
 var simulation = d3.forceSimulation()
                     .force('link', d3.forceLink())
