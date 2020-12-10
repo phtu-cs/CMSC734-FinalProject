@@ -67,9 +67,9 @@
                  <td style="padding:2%;width:63%;vertical-align:middle">
                    <!-- <p style="text-align:center"> -->
                    <!-- </p> -->
-                   <p style="text-align: center; width: 95%">
-         <img src="item.png" align="center" width="700" height="600">
-           <img src="heros.jpg" align="center" width="700" height="600">
+                   <p style="text-align: center;">
+         <img src="item.png" align="center" width="600" height="500">
+           <img src="heros.jpg" align="center" width="600" height="500">
                    </p>
                  </td>
                </tr>
@@ -98,7 +98,7 @@
              </tbody>
            </table>
 
-        <svg id="hero" width="1620" height="720" style="position: relative; left: 50px">
+        <svg id="hero" width="1620" height="720" style="display:block;margin: auto">
   <div style="position: relative; top: 20px; left: 175px;">
     <label for="rangeSelect">Sort by:</label>
     <select class="custom-select small" id="HerocategorySelect" onchange="onHeroCategoryChanged()">
@@ -121,7 +121,6 @@
     <hr size="20" width="70%" color="black">
 
     <div id="itemPage">
-
         <table style="width:80%;border:0px;border-spacing:0px;border-collapse:separate;margin:auto;"><tbody>
                <tr style="padding:0px" >
                  <td style="padding:2.5%;width:63%;vertical-align:middle" class = "Overview">
@@ -140,7 +139,7 @@
              </tbody>
            </table>
 
-        <svg id="items" width="800" height="600">
+        <svg id="items" width="800" height="600" >
            <defs>
           <linearGradient id="WinGradient">
          <stop offset="5%" stop-color="#90BCFE" />
@@ -152,22 +151,23 @@
          </linearGradient>
           </defs>
         </svg>
-        <div class="select_class" style= "position: relative; left: 100px">
+        <div class="select_class" style= "position: relative; left: 100px;">
             <label for="statSelect">Statistics: </label>
             <select class="custom-select" id="statSelect" onchange="onCategoryChanged()">
               <option selected value="top20Winrate">Win-Rate</option>
               <option value="top20Frequency">Purchase-Frequency</option>
             </select>
         </div>
-        <div class="select_class" style= "position: relative; left: 100px">
+        <div class="select_class" style= "position: relative; left: 100px;">
             <label for="categorySelect">Items: </label>
             <select class="custom-select" id="categorySelect" onchange="onCategoryChanged()">
               <option selected value="allItems">All Items</option>
               <option value="coreItems">Core-Items</option>
               <option value="supportItems">Support-Items</option>
             </select>
-        </div>
 
+        </div>
+        
         <hr size="20" width="70%" color="black">
 
         <table style="width:80%;border:0px;border-spacing:0px;border-collapse:separate;margin:auto;"><tbody>
@@ -197,16 +197,10 @@
           <img src="heroitem_medusa.jpg" align="center" width="256" height="144" id="itemhero_imgtwo">
           <img src="heroitem_pugna.jpg" align="center" width="256" height="144" id="itemhero_imgthree">
         </div>
-        <div>
-          <img src="itemlist.png" align="center" width="468" height="396" id="itemlist">
-        </div>
     </div>
 
     <hr size="20" width="70%" color="black">
-
     <div id="NetworkPage">
-
-
         <table style="width:80%;border:0px;border-spacing:0px;border-collapse:separate;margin:auto;"><tbody>
                <tr style="padding:0px" >
                  <td style="padding:2.5%;width:63%;vertical-align:middle" class = "Overview">

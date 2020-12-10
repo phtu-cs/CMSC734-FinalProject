@@ -244,11 +244,12 @@ function updateHeroChart() {
                 .attr('class', 'value')
                 .style('text-anchor', 'start')
                 .style('font-size', '15px')
-                .style('fill','white')
+                .style('fill','black')
                 .attr('transform', 'rotate(-65)')
                 .attr('dx', '.5em')
                 .attr('dy', '.5em')
                 .text(index.num_win);
+
         })
         .on('mouseout', function(d) {
             // Clean up the actions that happened in mouseover
@@ -269,7 +270,7 @@ function updateHeroChart() {
                 .attr('class', 'value')
                 .style('text-anchor', 'end')
                 .style('font-size', '15px')
-                .style('fill','white')
+                .style('fill','black')
                 .attr('transform', function(d) {
                     return 'translate('+[0, yScaleLose(d.num_lose) + 8]+')rotate(-65)';
                 })
@@ -300,7 +301,7 @@ function updateHeroChart() {
                     else { return 'start'; }
                 })
                 .style('font-size', '15px')
-                .style('fill', 'white')
+                .style('fill', 'black')
                 .attr('transform', function(d) {
                     if(d.winrate < 50) { return 'translate('+[0, yScaleRate(d.winrate) + 8]+')rotate(-65)'; }
                     else { return 'translate('+[-1, 0]+')rotate(-65)'; }
@@ -308,6 +309,7 @@ function updateHeroChart() {
                 .attr('dx', '.5em')
                 .attr('dy', '.5em')
                 .text(hoverformat(index.winrate));
+            
         })
         .on('mouseout', function(d) {
             // Clean up the actions that happened in mouseover

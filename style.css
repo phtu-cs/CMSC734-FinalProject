@@ -200,11 +200,9 @@ a:hover { color: black; }
   left: 450px;
 }
 
-
 #itemPage img#itemlist{
-  position: relative;
-  top:  -1600px;
-  left: 900px;
+  top:  -600px;
+  left: 800px;
 }
 
 #NetWorkPage {
@@ -261,7 +259,7 @@ a:hover { color: black; }
 
 #heroPage .barWin.hovered text {
 	font-weight: bold;
-	color: white;
+	color: black;
 };
 
 #heroPage .barWin .value {
@@ -275,7 +273,7 @@ a:hover { color: black; }
 
 #heroPage .barLose.hovered text {
 	font-weight: bold;
-	color: white;
+	color: black;
 };
 
 #heroPage .barLose .value {
