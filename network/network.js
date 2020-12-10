@@ -3,21 +3,21 @@ var graphsvg = d3.select('#graphsvg');
 var graphwidth = +graphsvg.attr('width');
 var graphheight = +graphsvg.attr('height');
 
-var NetworkcolorScale = d3.scaleSequential(d3["interpolateYlOrRd"])
-    .domain([-20, 15]);
+var NetworkcolorScale = d3.scaleSequential(d3["interpolatePuRd"])
+    .domain([-0.2, 0.15]);
 
-var NetworkcolorScale2 = d3.scaleSequential(d3["interpolatePuRd"])
+var NetworkcolorScale2 = d3.scaleSequential(d3["interpolatePuBu"])
     .domain([10, 8000]);
 
 
 var NetworklinkScale = d3.scaleLinear()
     .domain([-0.10, 0.15])
-    .range([0.5,3.5]);
+    .range([1,4]);
 
 
 var NetworklinkScale2 = d3.scaleLinear()
     .domain([10, 8000])
-    .range([0.6,10.5]);
+    .range([1,10.9]);
 
 
 // var NetworkLinkColorScale = d3.scaleSequential(d3["interpolateYlOrRd"])
@@ -25,7 +25,7 @@ var NetworklinkScale2 = d3.scaleLinear()
 
 var simulation = d3.forceSimulation()
                     .force('link', d3.forceLink())
-                    .force('charge', d3.forceManyBody().strength(-850))
+                    .force('charge', d3.forceManyBody().strength(-650))
                     .force('center', d3.forceCenter(graphwidth / 2, graphheight / 2));
 
 
@@ -42,7 +42,7 @@ var gpopularity = d3.select('svg#slider-popularity')
                     .attr('width',400)
                     .attr('height',300)
                     .attr('transform','translate(1020,-900)')
-  //                  .append('g')
+  //                .append('g')
                    
 
 function onSliderChanged()
@@ -253,10 +253,10 @@ function showNodes(d,index){
                      .text(function(d) {
                      return d.id;
                          })
-                     .attr('x', -10)
+                     .attr('x', -11)
                      .attr('y', 18)
-                     .attr('font-size',15)
-                     .attr('font-weight',10);
+                     .attr('font-size',11)
+                     .attr('font-weight',8);
 
     nodes.append("title")
       .text(function(d) { return d.id; });
